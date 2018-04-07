@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title><%=title%></title>
+    <title>Order Form</title>
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- bower:css -->
@@ -39,7 +39,7 @@
         <nav class="collapse navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
                 <% for(var i=0; i<nav.length; i++){%>
-                <li><a href="HIII<%=nav[i].Link%>"><%=nav[i].Text%></a></li>
+                <li><a href="<%=nav[i].Link%>"><%=nav[i].Text%></a></li>
                 <%}%>
             </ul>
             <ul class="nav navbar-right navbar-nav">
@@ -60,7 +60,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                <h1><%=title%>
+                <h1>Storystrap
                     <p class="lead"></p>
                 </h1>
             </div>
@@ -102,24 +102,24 @@
                     <div class="row">
                         <br>
                         <div class="col-md-2 col-sm-3 text-center">
-                            <a class="story-title" href="#"><img alt="" src="http://api.randomuser.me/portraits/thumb/men/58.jpg" style="width:100px;height:100px" class="img-circle"></a>
-                        </div>
-                        <div class="col-md-10 col-sm-9">
-                            <h3><%=book.title%></h3>
-                            <div class="row">
-                                <div class="col-xs-9">
-                                    <h4><span class="label label-default">Inventory: <%=book.inventory%></span></h4><h4>
-                                    </h4></div>
-                                <div class="col-xs-3"></div>
-                            </div>
-                            <br><br>
+                            Your ethereum bill address(PUBLIC key):
+                            <form name="addressForm"
+                                  action="/Books/5ac077a0df4cf20594ec55b3/orderForm/success"
+                                  method="post">
+                                Username: <input name="userName" id="userName"><br/>
+                                Password: <input name="password" id="password"><br/>
+                                PUBLIC address: <input name="publicKey" id="publicKey"><br/>
+                                Locker number: <input name="lockerNumber" id="lockerNumber">
+                                <input type="submit" value="Submit">
+                            </form>
                         </div>
                     </div>
                     <hr>
+
                     <!--/stories-->
 
 
-                    <a href="/Books/<%=book._id%>/orderForm" class="btn btn-primary pull-right btnNext">Buy <i class="glyphicon glyphicon-chevron-right"></i></a>
+                    <a href="/" class="btn btn-primary pull-right btnNext">More <i class="glyphicon glyphicon-chevron-right"></i></a>
 
 
                 </div>

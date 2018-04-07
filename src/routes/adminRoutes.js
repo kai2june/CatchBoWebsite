@@ -7,48 +7,56 @@ var books = [
         title: 'Chance to win',
         author: 'eason',
         genre: 'action',
+        inventory: 3,
         read: false
     },
     {
         title: 'My first love',
         author: 'dick',
         genre: 'sorrow',
+        inventory: 3,
         read: false
     },
     {
         title: 'Good night',
         author: 'hacker',
         genre: 'action',
+        inventory: 3,
         read: false
     },
     {
         title: 'Heterosexual',
         author: 'iverson',
         genre: 'sex',
+        inventory: 3,
         read: false
     },
     {
         title: 'Jack the reaper',
         author: 'iverson',
         genre: 'sorrow',
+        inventory: 3,
         read: false
     },
     {
         title: 'Bad boy',
         author: 'dick',
         genre: 'fiction',
+        inventory: 3,
         read: true
     },
     {
         title: 'King of the world',
         author: 'candy',
         genre: 'fiction',
+        inventory: 3,
         read: false
     },
     {
         title: 'A good day',
         author: 'iverson',
         genre: 'comedy',
+        inventory: 3,
         read: false
     }
 ];
