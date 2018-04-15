@@ -39,7 +39,7 @@
         <nav class="collapse navbar-collapse" role="navigation">
             <ul class="nav navbar-nav">
                 <% for(var i=0; i<nav.length; i++){%>
-                <li><a href="HIII<%=nav[i].Link%>"><%=nav[i].Text%></a></li>
+                <li><a href="<%=nav[i].Link%>"><%=nav[i].Text%></a></li>
                 <%}%>
             </ul>
             <ul class="nav navbar-right navbar-nav">
@@ -108,9 +108,11 @@
                             <h3><%=book.title%></h3>
                             <div class="row">
                                 <div class="col-xs-9">
-                                    <h4><span class="label label-default">Inventory: <%=book.inventory%></span></h4><h4>
-                                    </h4></div>
-                                <div class="col-xs-3"></div>
+                                    <h4><span class="label label-default">Inventory: <%=book.inventory%></span></h4>
+                                    <h4>Description:<br/><%=book.description%></h4></div>
+                                <div class="col-xs-3">
+
+                                </div>
                             </div>
                             <br><br>
                         </div>

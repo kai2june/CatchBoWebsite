@@ -63,17 +63,27 @@ var books = [
 
 var router = function (nav) {
 
-    adminRouter.route('/addBooks')
+    var lockers = [
+        {num: 1, state: 'empty'},
+        {num: 2, state: 'empty'},
+        {num: 3, state: 'empty'},
+        {num: 4, state: 'empty'},
+        {num: 5, state: 'empty'},
+        {num: 6, state: 'empty'},
+        {num: 7, state: 'empty'},
+        {num: 8, state: 'empty'}
+    ];
+    adminRouter.route('/resetLockers')
         .get(function (req, res) {
             var url = 'mongodb://localhost:27017/libraryApp';
             mongodb.connect(url, function (err, db) {
-                var collection = db.collection('books');
-                collection.insertMany(books, function (err, results) {
+                var collection = db.collection('lockers');
+                collection.remove({});
+                collection.insertMany(lockers, function(err,results){
                     res.send(results);
-                    db.close();
                 });
+                db.close();
             });
-            //res.send('inserting books');
         });
 
     return adminRouter;

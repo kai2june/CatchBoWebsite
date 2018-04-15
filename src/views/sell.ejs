@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title>Order Form</title>
+    <title>BookStore  </title>
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- bower:css -->
@@ -60,7 +60,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                <h1>Storystrap
+                <h1>BookStore
                     <p class="lead"></p>
                 </h1>
             </div>
@@ -102,12 +102,20 @@
                     <div class="row">
                         <br>
                         <div class="col-md-2 col-sm-3 text-center">
-                            <form name="addressForm"
-                                  action="/Books/<%=book._id%>/orderForm/success"
+                            Detail of merchandise:
+                            <form name="merchandise"
+                                  action="/Sell/submit"
                                   method="post">
-                                Ethereum Coinbase: <input name="buyerCoinbase" id="buyerCoinbase"><br/>
+                                Name: <input name="name" id="name"><br/>
+                                Description: <input name="description" id="description"><br/>
+                                Inventory: <input name="inventory" id="inventory">
+                                Price: <input name="price" id="price">
+                                Ethereum Coinbase: <input name="sellerCoinbase" id="sellerCoinbase">
                                 <input type="submit" value="Submit">
                             </form>
+                        </div>
+                        <div class="col-md-10 col-sm-9">
+
                         </div>
                     </div>
                     <hr>
