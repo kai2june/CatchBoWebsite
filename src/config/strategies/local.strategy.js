@@ -13,7 +13,11 @@ module.exports = function () {
                 var collection = db.collection('users');
                 collection.findOne({username: username},
                     function (err, results) {
-                        if (results.password === password) {
+                        if(!results) {
+                            console.log('No this user');
+                            done(null, false, {message: 'No this user'});
+                        }
+                        else if (results.password === password) {
                             var user = results;
                             done(null, user);
                         }

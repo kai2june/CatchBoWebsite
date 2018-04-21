@@ -5,10 +5,19 @@ var passport = require('passport');
 var session = require('express-session');
 
 var app = express();
-
 var port = process.env.PORT || 5000;
 var nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}];
-var bookRouter = require('./src/routes/bookRoutes')(nav);
+var ContractManager = require('./scm');
+var fs = require('fs');
+// ContractManager.compileFile('./CatchBo.sol', function (err, result) {
+//     if (err) throw err;
+//     console.log(result);
+// });
+var abi = fs.readFileSync('./contracts/CatchBo.sol.abi');
+var bin = fs.readFileSync('./contracts/CatchBo.sol.bin');
+var contractManager = new ContractManager(abi, bin);
+
+var bookRouter = require('./src/routes/bookRoutes')(nav, contractManager);
 var sellRouter = require('./src/routes/sellRoutes')(nav);
 var adminRouter = require('./src/routes/adminRoutes')(nav);
 var authRouter = require('./src/routes/authRoutes')(nav);
