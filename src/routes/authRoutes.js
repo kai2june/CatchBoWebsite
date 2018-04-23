@@ -5,12 +5,6 @@ var passport = require('passport');
 
 var router = function () {
     authRouter.route('/signUp')
-        .all(function(req,res,next){
-            if(!req.user)
-                res.redirect('/');
-            else
-                next();
-        })
         .post(function (req, res) {
             console.log(req.body);
             var url = 'mongodb://localhost:27017/libraryApp';
@@ -29,12 +23,6 @@ var router = function () {
             });
         });
     authRouter.route('/signIn')
-        .all(function(req,res,next){
-            if(!req.user)
-                res.redirect('/');
-            else
-                next();
-        })
         .post(passport.authenticate('local', {
             failureRedirect: '/'
         }), function (req, res) {
