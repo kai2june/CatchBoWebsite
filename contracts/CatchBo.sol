@@ -4,36 +4,24 @@ contract CatchBo {
     uint public fee;
     address public seller;
     address public buyer;
-    mapping(uint => bool) public unlock;
+
+    event ReturnValue(address indexed _from, uint _value);
+    event drawdownReturnValue(address indexed _from, uint _value);
     function CatchBo(address _buyer,uint _fee) public {
         fee = _fee;
         seller = msg.sender;
         buyer = _buyer;
     }
 
-    function setFee(uint _fee) public {
-        fee = _fee;
+    function payBill() public payable returns(uint){
+        ReturnValue(msg.sender, msg.value);
+        return msg.value;
     }
 
-    function setSeller(address _seller) public {
-        seller = _seller;
-    }
-
-    function setBuyer(address _buyer) public {
-        buyer = _buyer;
-    }
-
-    function payBill(uint locker) public payable {
-        if( msg.value != fee ){
-            unlock[locker] = false;
-        }
-        else{
-            unlock[locker] = true;
-        }
-    }
-
-    function drawdown() public {
+    function drawdown() public payable returns(uint){
         seller.transfer(this.balance);
+        drawdownReturnValue(msg.sender, this.balance);
+        return this.balance;
     }
 
     function getBalance() public constant returns(uint){

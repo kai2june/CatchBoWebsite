@@ -9,10 +9,10 @@ var port = process.env.PORT || 5000;
 var nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}];
 var ContractManager = require('./scm');
 var fs = require('fs');
-// ContractManager.compileFile('./CatchBo.sol', function (err, result) {
-//     if (err) throw err;
-//     console.log(result);
-// });
+ContractManager.compileFile('./contracts/CatchBo.sol', function (err, result) {
+    if (err) throw err;
+    console.log(result);
+});
 var abi = fs.readFileSync('./contracts/CatchBo.sol.abi');
 var bin = fs.readFileSync('./contracts/CatchBo.sol.bin');
 var contractManager = new ContractManager(abi, bin);
@@ -25,7 +25,7 @@ var authRouter = require('./src/routes/authRoutes')(nav);
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(session({secret: 'library'}));
+app.use(session({secret: 'library', resave: true, saveUninitialized: true }));
 
 require('./src/config/passport')(app);
 

@@ -112,7 +112,8 @@ var router = function (nav, contractManager) {
                         });
                         contractManager.deploy(results.sellerCoinbase, req.body.buyerCoinbase, results.price,
                             function (contract) {
-                                console.log('In bookRoutes.js contract.address: ' + contract.address);
+                                // console.log('bookRoutes.js:');
+                                // console.log('contract.address: ' + contract.address);
                             });
                     });
 

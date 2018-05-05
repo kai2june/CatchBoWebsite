@@ -40,7 +40,8 @@ class ContractManager {
     deploy(sellerCoinbase, buyerCoinbase, fee, callback) {
         let c = this.web3.eth.contract(this.abi);
         let that = this;
-        this.web3.personal.unlockAccount(sellerCoinbase, "nccutest");
+        this.web3.personal.unlockAccount(sellerCoinbase, passwordDefault);
+        this.web3.personal.unlockAccount(buyerCoinbase, passwordDefault);
         c.new(buyerCoinbase, this.web3.toWei(fee, "ether"),
             {
                 from: sellerCoinbase,
@@ -49,10 +50,55 @@ class ContractManager {
             }, function (e, contract) {
                 if (e) throw e;
                 if (contract)
-                    console.log("Contract transaction send: Transaction Hash: " + contract.transactionHash+" waiting to be mined...");
+                    console.log('Contract transaction send: Transaction Hash: ' + contract.transactionHash + ' waiting to be mined...');
                 if (contract && contract.address) {
-                    console.log('Contract mined... that.account: '+ that.account + ' contract.address: '+ contract.address + ' contract: ' + contract);
-                    callback(new Contract(that.account, contract.address, contract));
+                    console.log('Contract mined... that.account: ' + that.account + ' contract.address: ' + contract.address);
+                    var contractInstance = that.web3.eth.contract(that.abi).at(contract.address);
+                    console.log('===Before payBill():');
+                    console.log('Contract balance is now: ' + that.web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
+                    console.log('Merchandise price: ' + that.web3.fromWei(contractInstance.fee(), "ether") + ' eth');
+                    console.log('Seller\'s coinbase: ' + contractInstance.seller());
+                    console.log('Buyer\'s coinbase: ' + contractInstance.buyer());
+                    var payBillEvent = contractInstance.ReturnValue({_from: buyerCoinbase});
+                    var drawdownEvent = contractInstance.drawdownReturnValue({_from: sellerCoinbase});
+                    payBillEvent.watch(function(err, result) {
+                        if (err) {
+                            console.log(err);
+                            return;
+                        } else {
+                            console.log('BUYER paid: ' + that.web3.fromWei(result.args._value, "ether") + ' eth');
+                            console.log('===After buyer payBill, Before seller drawdown:');
+                            console.log('Contract balance is now: ' + that.web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
+                            that.web3.personal.unlockAccount(sellerCoinbase, passwordDefault);
+                            contractInstance.drawdown({from: sellerCoinbase});
+                        }
+                    });
+                    drawdownEvent.watch(function(e, rlt){
+                        if(e){
+                            console.log(e);
+                            return;
+                        }else{
+                            console.log('===After seller drawdown:');
+                            console.log('Contract balance is now (getBalance()): ' + that.web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
+                            console.log('Contract balance is now (event): ' + that.web3.fromWei(rlt.args._value, "ether") + ' eth')
+                            console.log('===Done!===');
+                        }
+                    });
+                    that.web3.personal.unlockAccount(buyerCoinbase, passwordDefault);
+                    contractInstance.payBill({from:buyerCoinbase, value:that.web3.toWei(fee, "ether")}, function(err,result){
+                        if(err)
+                            console.log(err);
+                        else{
+                            if(! result )
+                                console.log('No result payBill()');
+                            else {
+                                // that.web3.personal.unlockAccount(sellerCoinbase, passwordDefault);
+                                // contractInstance.drawdown({from: sellerCoinbase});
+                            }
+                        }
+                    });
+
+                    callback(new Contract(that.account, contract.address, contract), contractInstance);
                 }
             });
     }
