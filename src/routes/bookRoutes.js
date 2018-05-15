@@ -87,6 +87,7 @@ var router = function (nav, contractManager) {
             var url = 'mongodb://localhost:27017/libraryApp';
             var locker;
             var rlt_lockers;
+            var rlt_books;
 
             mongodb.connect(url, function (err, db) {
                 var collection = db.collection('lockers');
@@ -96,7 +97,6 @@ var router = function (nav, contractManager) {
                             num: results.num,
                             state: 'Non-empty'
                         });
-                        locker = results.num;
                         rlt_lockers = results;
                     });
             });
@@ -112,30 +112,53 @@ var router = function (nav, contractManager) {
                             price: results.price,
                             sellerCoinbase: results.sellerCoinbase
                         });
-                        contractManager.deploy(results.sellerCoinbase, req.body.buyerCoinbase, results.price,
-                            function (contract) {
-                                // console.log('bookRoutes.js:');
-                                // console.log('contract.address: ' + contract.address);
-                            });
+                        rlt_books = results;
+                        var coll = db.collection('orders');
+                        coll.insertOne({
+                            merchandiseName: rlt_books.name,
+                            description: rlt_books.description,
+                            price: rlt_books.price,
+                            sellerName: rlt_books.user,
+                            sellerCoinbase: rlt_books.sellerCoinbase,
+                            buyerName: req.user.username,
+                            buyerCoinbase: req.body.buyerCoinbase,
+                            locker: rlt_lockers.num
+                        }, function(err,rlt){
+                            if (err)
+                                console.log("WTF");
+                            else
+                                res.send(`SUCCESS merchandiseName: ${rlt_books.name},
+                                description: ${rlt_books.description},
+                                price: ${rlt_books.price},
+                                sellerName: ${rlt_books.user},
+                                sellerCoinbase: ${rlt_books.sellerCoinbase},
+                                buyerName: ${req.user.username},
+                                buyerCoinbase: ${req.body.buyerCoinbase},
+                                locker: ${rlt_lockers.num}`);
+                        });
+                        // contractManager.deploy(results.sellerCoinbase, req.body.buyerCoinbase, results.price,
+                        //     function (contract) {
+                        //         // console.log('bookRoutes.js:');
+                        //         // console.log('contract.address: ' + contract.address);
+                        //     });
                     });
             });
-            mongodb.connect(url, function (err, db) {
-                setTimeout(5000);
-                var collection = db.collection('orders');
-                console.log('In connection_order');
-                console.log(rlt_lockers);
-                collection.insertOne({
-                    userName: req.user.username,
-                    buyerCoinbase: req.body.buyerCoinbase,
-                    locker: locker
-                }, function (err, results) {
-                    if (err)
-                        console.log("WTF");
-                    else
-                        res.send('SUCCESS ' + 'You are ' + req.user.username + ' buyerCoinbase:' + req.body.buyerCoinbase + ' Your locker:' + locker);
-                });
-                db.close();
-            });
+            // mongodb.connect(url, function (err, db) {
+            //     var collection = db.collection('orders');
+            //     console.log('In connection_order');
+            //     console.log(rlt_lockers);
+            //     collection.insertOne({
+            //         userName: req.user.username,
+            //         buyerCoinbase: req.body.buyerCoinbase,
+            //         locker: locker
+            //     }, function (err, results) {
+            //         if (err)
+            //             console.log("WTF");
+            //         else
+            //             res.send('SUCCESS ' + 'You are ' + req.user.username + ' buyerCoinbase:' + req.body.buyerCoinbase + ' Your locker:' + locker);
+            //     });
+            //     db.close();
+            // });
 
         });
 
