@@ -86,6 +86,7 @@ var router = function (nav, contractManager) {
             var id = new objectId(req.params.id);
             var url = 'mongodb://localhost:27017/libraryApp';
             var locker;
+            var rlt_lockers;
 
             mongodb.connect(url, function (err, db) {
                 var collection = db.collection('lockers');
@@ -96,6 +97,7 @@ var router = function (nav, contractManager) {
                             state: 'Non-empty'
                         });
                         locker = results.num;
+                        rlt_lockers = results;
                     });
             });
             mongodb.connect(url, function (err, db) {
@@ -116,13 +118,16 @@ var router = function (nav, contractManager) {
                                 // console.log('contract.address: ' + contract.address);
                             });
                     });
-
             });
             mongodb.connect(url, function (err, db) {
+                setTimeout(5000);
                 var collection = db.collection('orders');
+                console.log('In connection_order');
+                console.log(rlt_lockers);
                 collection.insertOne({
                     userName: req.user.username,
-                    buyerCoinbase: req.body.buyerCoinbase
+                    buyerCoinbase: req.body.buyerCoinbase,
+                    locker: locker
                 }, function (err, results) {
                     if (err)
                         console.log("WTF");
