@@ -31,6 +31,7 @@ const router = function(nav){
                     const rlt = await coll.find({sellerName: username}).toArray();
                     console.log(`4 ${req.user.username}`);
                     res.send(rlt);
+                    db.close();
                 }catch(err){
                     console.log(err);
                 }
