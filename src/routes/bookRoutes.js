@@ -98,6 +98,7 @@ var router = function (nav, contractManager) {
                             state: 'Non-empty'
                         });
                         rlt_lockers = results;
+                        
                     });
             });
             mongodb.connect(url, function (err, db) {
@@ -136,12 +137,15 @@ var router = function (nav, contractManager) {
                                 buyerCoinbase: ${req.body.buyerCoinbase},
                                 locker: ${rlt_lockers.num}`);
                         });
-                        // contractManager.deploy(results.sellerCoinbase, req.body.buyerCoinbase, results.price,
-                        //     function (contract) {
-                        //         // console.log('bookRoutes.js:');
-                        //         // console.log('contract.address: ' + contract.address);
-                        //     });
+                        contractManager.deploy(results.sellerCoinbase, req.body.buyerCoinbase, results.price,
+                            function (contract) {
+                                // console.log('bookRoutes.js:');
+                                // console.log('contract.address: ' + contract.address);
+                            });
                     });
+                    setTimeout(function(){
+                        db.close();
+                    }, 5000);
             });
             // mongodb.connect(url, function (err, db) {
             //     var collection = db.collection('orders');
