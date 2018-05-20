@@ -3,10 +3,12 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var session = require('express-session');
+const socket = require('socket.io');
+const server = require('http').Server(app);
 
 var app = express();
 var port = process.env.PORT || 5000;
-var nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}, {Link: '/buyRecord', Text: 'Buy Record'}, {Link: '/sellRecord', Text: 'Sell Record'}];
+var nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}, {Link: '/buyRecord', Text: 'Buy Record'}, {Link: '/sellRecord', Text: 'Sell Record'}, {Link: '/mailer', Text: 'Mailman'}];
 var ContractManager = require('./scm');
 var fs = require('fs');
 // ContractManager.compileFile('./contracts/CatchBo.sol', function (err, result) {
@@ -23,6 +25,7 @@ var adminRouter = require('./src/routes/adminRoutes')(nav);
 var authRouter = require('./src/routes/authRoutes')(nav);
 const buyRecordRouter = require('./src/routes/buyRecordRoutes')(nav);
 const sellRecordRouter = require('./src/routes/sellRecordRoutes')(nav);
+const mailerRouter = require('./src/routes/mailerRoutes')(nav);
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -43,6 +46,7 @@ app.use('/Admin', adminRouter);
 app.use('/Auth', authRouter);
 app.use('/buyRecord', buyRecordRouter);
 app.use('/sellRecord', sellRecordRouter);
+app.use('/mailer', mailerRouter);
 
 app.get('/', function (req, res) {
     res.render('index', {
@@ -57,4 +61,12 @@ app.get('/books', function (req, res) {
 
 app.listen(port, function (err) {
     console.log('running server on port ' + port);
+});
+
+const io = socket(server);
+io.on('connection', function(socket){
+    console.log('made socket connection', socket.id);
+    socket.on('chat', function(data){
+        io.sockets.emit('chat', data);
+    });
 });

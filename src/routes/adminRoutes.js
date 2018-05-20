@@ -64,14 +64,14 @@ var mongodb = require('mongodb').MongoClient;
 var router = function (nav) {
 
     var lockers = [
-        {num: 1, state: 'empty'},
-        {num: 2, state: 'empty'},
-        {num: 3, state: 'empty'},
-        {num: 4, state: 'empty'},
-        {num: 5, state: 'empty'},
-        {num: 6, state: 'empty'},
-        {num: 7, state: 'empty'},
-        {num: 8, state: 'empty'}
+        {num: '1', state: 'empty'},
+        {num: '2', state: 'empty'},
+        {num: '3', state: 'empty'},
+        {num: '4', state: 'empty'},
+        {num: '5', state: 'empty'},
+        {num: '6', state: 'empty'},
+        {num: '7', state: 'empty'},
+        {num: '8', state: 'empty'}
     ];
     adminRouter.route('/resetLockers')
         .all(function(req,res,next){

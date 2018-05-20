@@ -5,6 +5,7 @@ var objectId = require('mongodb').ObjectID;
 var web3 = require('web3');
 var compiler = require('solc');
 var fs = require('fs');
+const io = require('socket.io');
 
 var router = function (nav, contractManager) {
 
@@ -83,6 +84,13 @@ var router = function (nav, contractManager) {
         });
     bookRouter.route('/:id/orderForm/success')
         .post(function (req, res) {
+
+            // const socket = io.connect('http://localhost:5000');
+            // socket.emit('chat', "nice 2 meet you");
+            // socket.on('chat', function(data){
+            //     console.log(`In bookRoutes.js ${data}`);
+            // });
+
             var id = new objectId(req.params.id);
             var url = 'mongodb://localhost:27017/libraryApp';
             var locker;
@@ -123,7 +131,8 @@ var router = function (nav, contractManager) {
                             sellerCoinbase: rlt_books.sellerCoinbase,
                             buyerName: req.user.username,
                             buyerCoinbase: req.body.buyerCoinbase,
-                            locker: rlt_lockers.num
+                            locker: rlt_lockers.num,
+                            merchandiseArriveLocker: false
                         }, function(err,rlt){
                             if (err)
                                 console.log("WTF");
@@ -135,10 +144,13 @@ var router = function (nav, contractManager) {
                                 sellerCoinbase: ${rlt_books.sellerCoinbase},
                                 buyerName: ${req.user.username},
                                 buyerCoinbase: ${req.body.buyerCoinbase},
-                                locker: ${rlt_lockers.num}`);
+                                locker: ${rlt_lockers.num},
+                                merchandiseArriveLocker: false`);
                         });
+
                         contractManager.deploy(results.sellerCoinbase, req.body.buyerCoinbase, results.price,
                             function (contract) {
+
                                 // console.log('bookRoutes.js:');
                                 // console.log('contract.address: ' + contract.address);
                             });
