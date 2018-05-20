@@ -1,0 +1,29 @@
+{
+  "name": "lockwebserver",
+  "version": "1.0.0",
+  "description": "Ruby's study project web site",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "socket.io": "^1.4.8",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubycheng121/LockProject.git"
+  },
+  "keywords": [
+    "lock",
+    "server"
+  ],
+  "author": "RubyCheng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rubycheng121/LockProject/issues"
+  },
+  "homepage": "https://github.com/rubycheng121/LockProject#readme"
+}

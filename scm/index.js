@@ -98,7 +98,7 @@ class ContractManager {
                         }
                     });
 
-                    callback(new Contract(that.account, contract.address, contract), contractInstance);
+                    callback(new Contract(that.account, contract.address, contract));
                 }
             });
     }
