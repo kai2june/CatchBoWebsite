@@ -130,7 +130,7 @@ var router = function (nav, contractManager) {
                             if (err)
                                 console.log("WTF");
                             else
-                                res.send(`SUCCESS merchandiseName: ${rlt_books.name},
+                                console.log(`SUCCESS merchandiseName: ${rlt_books.name},
                                 description: ${rlt_books.description},
                                 price: ${rlt_books.price},
                                 sellerName: ${rlt_books.user},
@@ -144,7 +144,27 @@ var router = function (nav, contractManager) {
                         contractManager.deploy(results.sellerCoinbase, req.body.buyerCoinbase, results.price,
                             function (contract) {
                                 console.log('Now trying to unlock the locker');
-                                
+                                res.render('index2');
+                                //res.render('index2.ejs');
+                                // var app = express();
+                                // var server = require('http').Server(app);
+                                // var io = require('socket.io')(server);
+                                // var io = require('D:/WebStorm/WebStormProjects/CatchBoWebsite/node_modules/socket.io/lib/socket.js');
+                                // var socket = io.connect('http://127.0.0.1:5000');
+                                // socket.on('news', function (data) {
+                                //     console.log(data);
+                                //     // socket.emit('my other event', { my: 'data' });
+                                //     if (data === 'TRUE') {
+                                //         //OK
+                                //     };
+                                //     if (data === 'hi') {
+                                //         var dataObj = {renter:"some adress", mSec:millisecond};
+                                //         socket.emit('event_renting', dataObj);
+                                //     };
+                                //   });
+                                //   socket.on("returnGoGORO",function(data){
+                                //       console.log(data)
+                                //   })
                             });
                     });
                     setTimeout(function(){
