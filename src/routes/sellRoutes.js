@@ -1,6 +1,6 @@
 var express = require('express');
 var sellRouter = express.Router();
-var mongodb = require('mongodb').MongoClient;
+var {MongoClient} = require('mongodb');
 
 var router = function (nav) {
 
@@ -22,25 +22,29 @@ var router = function (nav) {
         });
     sellRouter.route('/submit')
         .post(function (req, res) {
-            var url = 'mongodb://localhost:27017/libraryApp';
-            mongodb.connect(url, function (err, db) {
-                var collection = db.collection('books');
-                collection.insertOne({
+            const url = 'mongodb://localhost:27017';
+            const dbName = 'libraryApp';
+
+            (async function sellMerchandise(){
+                try{
+                    const client = await MongoClient.connect(url);
+                    const db = client.db(dbName);
+                    const coll = db.collection('books');
+                    const merchandise = {
                         user: req.user.username,
                         name: req.body.name,
                         description: req.body.description,
                         inventory: req.body.inventory,
                         price: req.body.price,
                         sellerCoinbase: req.body.sellerCoinbase
-                    },
-                    function (err, results) {
-                        if (err)
-                            res.send('Failed due to ' + err);
-                        else
-                            res.send('SUCCESS ' + results + ' User:'+ req.user.username + ' Description:' + req.body.description + ' Inventory:' + req.body.inventory + ' Price:' + req.body.price + ' sellerCoinbase:' + req.body.sellerCoinbase);
-                    });
-                db.close();
-            });
+                    };
+                    const results = await coll.insertOne(merchandise);
+                    res.send(results.ops[0]);
+                    db.close();
+                }catch(err){
+                    console.log(err);
+                };
+            }());
         });
 
 

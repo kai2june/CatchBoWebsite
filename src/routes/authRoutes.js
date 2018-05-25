@@ -1,26 +1,33 @@
-var express = require('express');
-var authRouter = express.Router();
-var mongodb = require('mongodb').MongoClient;
-var passport = require('passport');
+const express = require('express');
+const authRouter = express.Router();
+const {MongoClient} = require('mongodb');
+const passport = require('passport');
 
-var router = function () {
+const router = function () {
     authRouter.route('/signUp')
         .post(function (req, res) {
             console.log(req.body);
-            var url = 'mongodb://localhost:27017/libraryApp';
-            mongodb.connect(url, function (err, db) {
-                var collection = db.collection('users');
-                var user = {
-                    username: req.body.userName,
-                    password: req.body.password
-                };
-                collection.insert(user,
-                    function (err, results) {
-                        req.login(results.ops[0], function () {
-                            res.redirect('/auth/profile');
-                        });
+            const url = 'mongodb://localhost:27017';
+            const dbName = 'libraryApp';
+            
+            (async function signUp(){
+                try{
+                    const client = await MongoClient.connect(url);
+                    const db = client.db(dbName);
+                    const coll = db.collection('users');
+                    const user = {
+                        username: req.body.userName,
+                        password: req.body.password
+                    };
+                    const results = await coll.insertOne(user);
+                    req.login( results.ops[0], () => {
+                        res.redirect('/auth/profile');
                     });
-            });
+                    db.close();
+                }catch(err){
+                    console.log(err);
+                };
+            }());
         });
     authRouter.route('/signIn')
         .post(passport.authenticate('local', {

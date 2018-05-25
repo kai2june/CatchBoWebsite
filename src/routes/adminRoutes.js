@@ -1,69 +1,10 @@
-var express = require('express');
-var adminRouter = express.Router();
-var mongodb = require('mongodb').MongoClient;
+const express = require('express');
+const adminRouter = express.Router();
+const {MongoClient} = require('mongodb');
 
-// var books = [
-//     {
-//         title: 'Chance to win',
-//         author: 'eason',
-//         genre: 'action',
-//         inventory: 3,
-//         read: false
-//     },
-//     {
-//         title: 'My first love',
-//         author: 'dick',
-//         genre: 'sorrow',
-//         inventory: 3,
-//         read: false
-//     },
-//     {
-//         title: 'Good night',
-//         author: 'hacker',
-//         genre: 'action',
-//         inventory: 3,
-//         read: false
-//     },
-//     {
-//         title: 'Heterosexual',
-//         author: 'iverson',
-//         genre: 'sex',
-//         inventory: 3,
-//         read: false
-//     },
-//     {
-//         title: 'Jack the reaper',
-//         author: 'iverson',
-//         genre: 'sorrow',
-//         inventory: 3,
-//         read: false
-//     },
-//     {
-//         title: 'Bad boy',
-//         author: 'dick',
-//         genre: 'fiction',
-//         inventory: 3,
-//         read: true
-//     },
-//     {
-//         title: 'King of the world',
-//         author: 'candy',
-//         genre: 'fiction',
-//         inventory: 3,
-//         read: false
-//     },
-//     {
-//         title: 'A good day',
-//         author: 'iverson',
-//         genre: 'comedy',
-//         inventory: 3,
-//         read: false
-//     }
-// ];
+const router = function (nav) {
 
-var router = function (nav) {
-
-    var lockers = [
+    const lockers = [
         {num: '1', state: 'empty'},
         {num: '2', state: 'empty'},
         {num: '3', state: 'empty'},
@@ -81,15 +22,22 @@ var router = function (nav) {
                 next();
         })
         .get(function (req, res) {
-            var url = 'mongodb://localhost:27017/libraryApp';
-            mongodb.connect(url, function (err, db) {
-                var collection = db.collection('lockers');
-                collection.remove({});
-                collection.insertMany(lockers, function(err,results){
-                    res.send(results);
-                });
-                db.close();
-            });
+            const url = 'mongodb://localhost:27017';
+            const dbName = 'libraryApp';
+            
+            (async function resetLockers(){
+                try{
+                    const client = await MongoClient.connect(url);
+                    const db = client.db(dbName);
+                    const coll = db.collection('lockers');
+                    const results = await coll.remove({});
+                    const results2 = await coll.insertMany(lockers);
+                    res.send(results2);
+                    db.close();
+                }catch(err){
+                    console.log(err);
+                }
+            }());
         });
 
     return adminRouter;

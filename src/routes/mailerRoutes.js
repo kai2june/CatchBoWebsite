@@ -26,9 +26,8 @@ const router = function(){
             const dbName = 'libraryApp';
     
             (async function mailerLocker(){
-                let client;
                 try{
-                    client = await MongoClient.connect(url);
+                    const client = await MongoClient.connect(url);
                     const db = client.db(dbName);
                     const coll = db.collection('orders');
                     for(let j in locker){
@@ -47,6 +46,7 @@ const router = function(){
                             });
                         }
                     }
+                    db.close();
                 }catch(err){
                     console.log(err);
                 }

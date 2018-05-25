@@ -20,9 +20,8 @@ const router = function(nav){
             const dbName = 'libraryApp';
 
             (async function findOrder(){
-                let client;
                 try{
-                    client = await MongoClient.connect(url);
+                    const client = await MongoClient.connect(url);
                     const db = client.db(dbName);
                     const coll = db.collection('orders');
                     const user = {
