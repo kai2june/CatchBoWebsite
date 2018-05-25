@@ -1,12 +1,12 @@
-var express = require('express');
-var bookRouter = express.Router();
+const express = require('express');
+const bookRouter = express.Router();
 const {MongoClient} = require('mongodb');
-var objectId = require('mongodb').ObjectID;
-var web3 = require('web3');
-var compiler = require('solc');
-var fs = require('fs');
+const objectId = require('mongodb').ObjectID;
+const web3 = require('web3');
+const compiler = require('solc');
+const fs = require('fs');
 
-var router = function (nav, contractManager) {
+const router = function (nav, contractManager) {
 
     bookRouter.use(function (req, res, next) {
         if (!req.user) {
@@ -157,11 +157,11 @@ var router = function (nav, contractManager) {
 //         console.log('Now trying to unlock the locker');
 //         res.render('index2');
 //         //res.render('index2.ejs');
-//         // var app = express();
-//         // var server = require('http').Server(app);
-//         // var io = require('socket.io')(server);
-//         // var io = require('D:/WebStorm/WebStormProjects/CatchBoWebsite/node_modules/socket.io/lib/socket.js');
-//         // var socket = io.connect('http://127.0.0.1:5000');
+//         // const app = express();
+//         // const server = require('http').Server(app);
+//         // const io = require('socket.io')(server);
+//         // const io = require('D:/WebStorm/WebStormProjects/CatchBoWebsite/node_modules/socket.io/lib/socket.js');
+//         // const socket = io.connect('http://127.0.0.1:5000');
 //         // socket.on('news', function (data) {
 //         //     console.log(data);
 //         //     // socket.emit('my other event', { my: 'data' });
@@ -169,7 +169,7 @@ var router = function (nav, contractManager) {
 //         //         //OK
 //         //     };
 //         //     if (data === 'hi') {
-//         //         var dataObj = {renter:"some adress", mSec:millisecond};
+//         //         const dataObj = {renter:"some adress", mSec:millisecond};
 //         //         socket.emit('event_renting', dataObj);
 //         //     };
 //         //   });

@@ -1,8 +1,8 @@
-var express = require('express');
-var sellRouter = express.Router();
-var {MongoClient} = require('mongodb');
+const express = require('express');
+const sellRouter = express.Router();
+const {MongoClient} = require('mongodb');
 
-var router = function (nav) {
+const router = function (nav) {
 
     sellRouter.use(function (req, res, next) {
         if (!req.user) {

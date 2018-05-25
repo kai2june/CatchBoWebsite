@@ -1,4 +1,4 @@
-var passport = require('passport'),
+const passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     {MongoClient} = require('mongodb');
 

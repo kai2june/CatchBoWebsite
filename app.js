@@ -1,25 +1,25 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var passport = require('passport');
-var session = require('express-session');
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-var five = require("johnny-five");
+const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const session = require('express-session');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const five = require("johnny-five");
 
 // //windows
-// var board  = new five.Board({
+// const board  = new five.Board({
 // 	port : "COM3"
 // });
 // //mac
-// /*var board  = new five.Board({
+// /*const board  = new five.Board({
 // 	port : "/dev/cu.usbmodem1411",
 // 	repl : false
 // });*/
 
-// var lockLed, unlockLed, engineLed; //鎖定燈, 解鎖燈, 發動燈
-// var ledObject = {
+// let lockLed, unlockLed, engineLed; //鎖定燈, 解鎖燈, 發動燈
+// let ledObject = {
 //     lockLedState: "on"  ,
 //     unlockLedState: "off" ,
 // 	// lockLedState : "off",
@@ -27,13 +27,13 @@ var five = require("johnny-five");
 // 	engineLedState : "off"
 
 // };
-// var engineButton, returnButton;
-// var engineRelay;
-// var renter;
-// var socketForuse;
-// var isTimeout=true,isReturn;
+// let engineButton, returnButton;
+// let engineRelay;
+// let renter;
+// let socketForuse;
+// let isTimeout=true,isReturn;
 
-// var status=false;
+// let status=false;
 
 // // server.listen(process.env.PORT || 1336, function(){
 // // 	console.log('listening on *:1336');
@@ -67,7 +67,7 @@ var five = require("johnny-five");
 // 		socket.emit('news', 'hi');
 // 		socket.on('event_renting', function (data) {
 // 			renter = data["renter"];
-// 			var mSec = data["mSec"];
+// 			const mSec = data["mSec"];
 // 			console.log(renter)
 // 			console.log(mSec)
 
@@ -164,22 +164,22 @@ var five = require("johnny-five");
 
 //==================================================Above are wrote by Ruby===============================================================//
 //==================================================Below are wrote by me=================================================================//
-var port = process.env.PORT || 5000;
-var nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}, {Link: '/buyRecord', Text: 'Buy Record'}, {Link: '/sellRecord', Text: 'Sell Record'}, {Link: '/mailer', Text: 'Mailman'}];
-var ContractManager = require('./scm');
-var fs = require('fs');
+const port = process.env.PORT || 5000;
+const nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}, {Link: '/buyRecord', Text: 'Buy Record'}, {Link: '/sellRecord', Text: 'Sell Record'}, {Link: '/mailer', Text: 'Mailman'}];
+const ContractManager = require('./scm');
+const fs = require('fs');
 // ContractManager.compileFile('./contracts/CatchBo.sol', function (err, result) {
 //     if (err) throw err;
 //     console.log(result);
 // });
-var abi = fs.readFileSync('./contracts/CatchBo.sol.abi');
-var bin = fs.readFileSync('./contracts/CatchBo.sol.bin');
-var contractManager = new ContractManager(abi, bin);
+const abi = fs.readFileSync('./contracts/CatchBo.sol.abi');
+const bin = fs.readFileSync('./contracts/CatchBo.sol.bin');
+const contractManager = new ContractManager(abi, bin);
 
-var bookRouter = require('./src/routes/bookRoutes')(nav, contractManager);
-var sellRouter = require('./src/routes/sellRoutes')(nav);
-var adminRouter = require('./src/routes/adminRoutes')(nav);
-var authRouter = require('./src/routes/authRoutes')(nav);
+const bookRouter = require('./src/routes/bookRoutes')(nav, contractManager);
+const sellRouter = require('./src/routes/sellRoutes')(nav);
+const adminRouter = require('./src/routes/adminRoutes')(nav);
+const authRouter = require('./src/routes/authRoutes')(nav);
 const buyRecordRouter = require('./src/routes/buyRecordRoutes')(nav);
 const sellRecordRouter = require('./src/routes/sellRecordRoutes')(nav);
 const mailerRouter = require('./src/routes/mailerRoutes')(nav);
@@ -193,7 +193,7 @@ require('./src/config/passport')(app);
 
 app.set('views', './src/views');
 // app.set('view engine', 'jade');
-// var handlebars = require('express-handlebars');
+// const handlebars = require('express-handlebars');
 // app.engine('.hbs', handlebars({extname: '.hbs'}));
 app.set('view engine', 'ejs');
 

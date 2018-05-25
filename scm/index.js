@@ -59,8 +59,8 @@ class ContractManager {
                     console.log('Merchandise price: ' + that.web3.fromWei(contractInstance.fee(), "ether") + ' eth');
                     console.log('Seller\'s coinbase: ' + contractInstance.seller());
                     console.log('Buyer\'s coinbase: ' + contractInstance.buyer());
-                    var payBillEvent = contractInstance.ReturnValue({_from: buyerCoinbase});
-                    var drawdownEvent = contractInstance.drawdownReturnValue({_from: sellerCoinbase});
+                    const payBillEvent = contractInstance.ReturnValue({_from: buyerCoinbase});
+                    const drawdownEvent = contractInstance.drawdownReturnValue({_from: sellerCoinbase});
                     payBillEvent.watch(function(err, result) {
                         if (err) {
                             console.log(err);
