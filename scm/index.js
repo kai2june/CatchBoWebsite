@@ -53,7 +53,7 @@ class ContractManager {
                     console.log('Contract transaction send: Transaction Hash: ' + contract.transactionHash + ' waiting to be mined...');
                 if (contract && contract.address) {
                     console.log('Contract mined... that.account: ' + that.account + ' contract.address: ' + contract.address);
-                    var contractInstance = that.web3.eth.contract(that.abi).at(contract.address);
+                    const contractInstance = that.web3.eth.contract(that.abi).at(contract.address);
                     console.log('===Before payBill():');
                     console.log('Contract balance is now: ' + that.web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
                     console.log('Merchandise price: ' + that.web3.fromWei(contractInstance.fee(), "ether") + ' eth');

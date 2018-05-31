@@ -19,13 +19,13 @@ contract CatchBo {
     }
 
     function drawdown() public payable returns(uint){
-        seller.transfer(this.balance);
-        emit drawdownReturnValue(msg.sender, this.balance);
-        return this.balance;
+        seller.transfer(address(this).balance);
+        emit drawdownReturnValue(msg.sender, address(this).balance);
+        return address(this).balance;
     }
 
     function getBalance() public view returns(uint){
-        return this.balance;
+        return address(this).balance;
     }
 
     //if buyer take out the stuff and then call this function, it makes no sense.

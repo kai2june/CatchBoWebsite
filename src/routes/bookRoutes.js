@@ -145,38 +145,37 @@ const router = function (nav, contractManager) {
                     buyerCoinbase: ${req.body.buyerCoinbase},
                     locker: ${results_findEmptyLocker.num},
                     merchandiseArriveLocker: false`);
+
+                    contractManager.deploy(results_findSingleBook.sellerCoinbase, req.body.buyerCoinbase, results_findSingleBook.price,
+                        function (contract) {
+                            console.log('Now trying to unlock the locker');
+                            //res.render('index2');
+                            //res.render('index2.ejs');
+                            // const app = express();
+                            // const server = require('http').Server(app);
+                            // const io = require('socket.io')(server);
+                            // const io = require('D:/WebStorm/WebStormProjects/CatchBoWebsite/node_modules/socket.io/lib/socket.js');
+                            // const socket = io.connect('http://127.0.0.1:5000');
+                            // socket.on('news', function (data) {
+                            //     console.log(data);
+                            //     // socket.emit('my other event', { my: 'data' });
+                            //     if (data === 'TRUE') {
+                            //         //OK
+                            //     };
+                            //     if (data === 'hi') {
+                            //         const dataObj = {renter:"some adress", mSec:millisecond};
+                            //         socket.emit('event_renting', dataObj);
+                            //     };
+                            //   });
+                            //   socket.on("returnGoGORO",function(data){
+                            //       console.log(data)
+                            //   })
+                        });
                 }catch(err){
                     if(err)
                         console.log(err);
                 };
             }());
-
-////////////////////////////////////////////////////////////////////////////
-// contractManager.deploy(results_findSingleBook.sellerCoinbase, req.body.buyerCoinbase, results_findSingleBook.price,
-//     function (contract) {
-//         console.log('Now trying to unlock the locker');
-//         res.render('index2');
-//         //res.render('index2.ejs');
-//         // const app = express();
-//         // const server = require('http').Server(app);
-//         // const io = require('socket.io')(server);
-//         // const io = require('D:/WebStorm/WebStormProjects/CatchBoWebsite/node_modules/socket.io/lib/socket.js');
-//         // const socket = io.connect('http://127.0.0.1:5000');
-//         // socket.on('news', function (data) {
-//         //     console.log(data);
-//         //     // socket.emit('my other event', { my: 'data' });
-//         //     if (data === 'TRUE') {
-//         //         //OK
-//         //     };
-//         //     if (data === 'hi') {
-//         //         const dataObj = {renter:"some adress", mSec:millisecond};
-//         //         socket.emit('event_renting', dataObj);
-//         //     };
-//         //   });
-//         //   socket.on("returnGoGORO",function(data){
-//         //       console.log(data)
-//         //   })
-//     });
         });
 
 

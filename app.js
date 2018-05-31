@@ -168,10 +168,10 @@ const port = process.env.PORT || 5000;
 const nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}, {Link: '/buyRecord', Text: 'Buy Record'}, {Link: '/sellRecord', Text: 'Sell Record'}, {Link: '/mailer', Text: 'Mailman'}];
 const ContractManager = require('./scm');
 const fs = require('fs');
-// ContractManager.compileFile('./contracts/CatchBo.sol', function (err, result) {
-//     if (err) throw err;
-//     console.log(result);
-// });
+ContractManager.compileFile('./contracts/CatchBo.sol', function (err, result) {
+    if (err) throw err;
+    console.log(result);
+});
 const abi = fs.readFileSync('./contracts/CatchBo.sol.abi');
 const bin = fs.readFileSync('./contracts/CatchBo.sol.bin');
 const contractManager = new ContractManager(abi, bin);
