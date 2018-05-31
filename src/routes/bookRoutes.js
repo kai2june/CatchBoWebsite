@@ -148,7 +148,7 @@ const router = function (nav, contractManager) {
 
                     contractManager.deploy(results_findSingleBook.sellerCoinbase, req.body.buyerCoinbase, results_findSingleBook.price,
                         function (contract) {
-                            console.log('Now trying to unlock the locker');
+                            console.log(`In bookRoutes.js contract.address=${contract.address}`);
                             //res.render('index2');
                             //res.render('index2.ejs');
                             // const app = express();
