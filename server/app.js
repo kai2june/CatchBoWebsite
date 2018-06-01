@@ -5,7 +5,7 @@ var io = require('socket.io')(http);
 
 
 app.get('/',function(req, res){
-	res.sendFile(__dirname + '/index.html');
+	res.sendFile(__dirname + '/index.ejs');
 });
 
 // 當有client連上server

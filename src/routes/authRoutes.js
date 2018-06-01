@@ -3,7 +3,7 @@ const authRouter = express.Router();
 const {MongoClient} = require('mongodb');
 const passport = require('passport');
 
-const router = function () {
+const router = function (nav) {
     authRouter.route('/signUp')
         .post(function (req, res) {
             console.log(req.body);

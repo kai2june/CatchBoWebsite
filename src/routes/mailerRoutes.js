@@ -2,7 +2,7 @@ const express = require('express');
 const mailerRouter = express.Router();
 const {MongoClient} = require('mongodb');
 
-const router = function(){
+const router = function(nav){
     
     mailerRouter.use(function (req, res, next) {
         if (!req.user || (req.user.username != 'mailer') ) {
