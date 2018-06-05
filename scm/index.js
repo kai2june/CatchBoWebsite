@@ -63,17 +63,7 @@ class ContractManager {
                         try{
                             const payBillEvent = contractInstance.ReturnValue({_from: buyerCoinbase});
                             const drawdownEvent = contractInstance.drawdownReturnValue({_from: sellerCoinbase});
-                            that.web3.personal.unlockAccount(buyerCoinbase, passwordDefault);
-                            contractInstance.payBill({from:buyerCoinbase, value:that.web3.toWei(fee, "ether")}, function(err,result){
-                                if(err)
-                                    console.log(`payBill error: ${err}`);
-                                else{
-                                    if(! result )
-                                        console.log('No result payBill()');
-                                    else
-                                        console.log(`We're in payBill()'s result`);
-                                }
-                            });
+
                             payBillEvent.watch(function(err, result) {
                                 if (err) {
                                     console.log(`payBillWatch error: ${err}`);
@@ -100,6 +90,19 @@ class ContractManager {
                                     console.log('===Done!===');
                                 }
                             });
+                            that.web3.personal.unlockAccount(buyerCoinbase, passwordDefault);
+                            await contractInstance.payBill({from:buyerCoinbase, value:that.web3.toWei(fee, "ether")}, function(err,result){
+                                if(err)
+                                    console.log(`payBill error: ${err}`);
+                                else{
+                                    if(! result )
+                                        console.log('No result payBill()');
+                                    else{
+                                        console.log(`We're in payBill()'s result`);
+                                    }
+                                }
+                            });
+
                         }catch(err){
                             if(err)
                                 console.log(err);
