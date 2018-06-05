@@ -136,7 +136,7 @@ const router = function (nav, contractManager) {
                         merchandiseArriveLocker: false
                     });
                     db.close();
-                    res.send(`SUCCESS merchandiseName: ${results_findSingleBook.name},
+                    console.log(`SUCCESS merchandiseName: ${results_findSingleBook.name},
                     description: ${results_findSingleBook.description},
                     price: ${results_findSingleBook.price},
                     sellerName: ${results_findSingleBook.user},
@@ -149,27 +149,7 @@ const router = function (nav, contractManager) {
                     contractManager.deploy(results_findSingleBook.sellerCoinbase, req.body.buyerCoinbase, results_findSingleBook.price,
                         function (contract) {
                             console.log(`In bookRoutes.js contract.address=${contract.address}`);
-                            //res.render('index2');
-                            //res.render('index2.ejs');
-                            // const app = express();
-                            // const server = require('http').Server(app);
-                            // const io = require('socket.io')(server);
-                            // const io = require('D:/WebStorm/WebStormProjects/CatchBoWebsite/node_modules/socket.io/lib/socket.js');
-                            // const socket = io.connect('http://127.0.0.1:5000');
-                            // socket.on('news', function (data) {
-                            //     console.log(data);
-                            //     // socket.emit('my other event', { my: 'data' });
-                            //     if (data === 'TRUE') {
-                            //         //OK
-                            //     };
-                            //     if (data === 'hi') {
-                            //         const dataObj = {renter:"some adress", mSec:millisecond};
-                            //         socket.emit('event_renting', dataObj);
-                            //     };
-                            //   });
-                            //   socket.on("returnGoGORO",function(data){
-                            //       console.log(data)
-                            //   })
+                            res.redirect('/pay');
                         });
                 }catch(err){
                     if(err)
