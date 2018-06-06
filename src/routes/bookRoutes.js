@@ -5,6 +5,7 @@ const objectId = require('mongodb').ObjectID;
 const web3 = require('web3');
 const compiler = require('solc');
 const fs = require('fs');
+const client = require('socket.io');
 
 const router = function (nav, contractManager) {
 
@@ -107,6 +108,8 @@ const router = function (nav, contractManager) {
                     const db = client.db(dbName);
                     const coll_lockers = db.collection('lockers');
                     const results_findEmptyLocker = await coll_lockers.findOne({state: 'empty'});
+                    // if(!results_findEmptyLocker)
+                    //     console.log('No emptyyyyyyyyyyy locker');
                     const results_updateSingleLocker = await coll_lockers.updateOne({_id: results_findEmptyLocker._id},{
                         num: results_findEmptyLocker.num,
                         state: 'Non-empty'
@@ -133,7 +136,8 @@ const router = function (nav, contractManager) {
                         buyerName: req.user.username,
                         buyerCoinbase: req.body.buyerCoinbase,
                         locker: results_findEmptyLocker.num,
-                        merchandiseArriveLocker: false
+                        merchandiseArriveLocker: false,
+                        moneyPaid: false
                     });
                     db.close();
                     console.log(`SUCCESS merchandiseName: ${results_findSingleBook.name},
@@ -144,7 +148,8 @@ const router = function (nav, contractManager) {
                     buyerName: ${req.user.username},
                     buyerCoinbase: ${req.body.buyerCoinbase},
                     locker: ${results_findEmptyLocker.num},
-                    merchandiseArriveLocker: false`);
+                    merchandiseArriveLocker: false,
+                    moneyPaid: false`);
 
                     contractManager.deploy(results_findSingleBook.sellerCoinbase, req.body.buyerCoinbase, results_findSingleBook.price,
                         function (address, abi, rlt_web3) {
@@ -163,15 +168,50 @@ const router = function (nav, contractManager) {
                                 try{
                                     const payBillEvent = contractInstance.ReturnValue({_from: req.body.buyerCoinbase});
                                     const drawdownEvent = contractInstance.drawdownReturnValue({_from: req.body.sellerCoinbase});
-        
+                                    res.redirect('/pay');
                                     payBillEvent.watch(function(err, result) {
                                         if (err) {
                                             console.log(`payBillWatch error: ${err}`);
                                         } else {
+                                            (async function moneyPaid(){
+                                                const url = 'mongodb://localhost:27017';
+                                                const dbName = 'libraryApp';
+                                                try{
+                                                const client = await MongoClient.connect(url);
+                                                const db = client.db(dbName);
+                                                const coll = db.collection('orders');
+                                                const results_findSingleOrder = await coll.findOne({                        
+                                                    merchandiseName: results_findSingleBook.name,
+                                                    description: results_findSingleBook.description,
+                                                    price: results_findSingleBook.price,
+                                                    sellerName: results_findSingleBook.user,
+                                                    sellerCoinbase: results_findSingleBook.sellerCoinbase,
+                                                    buyerName: req.user.username,
+                                                    buyerCoinbase: req.body.buyerCoinbase,
+                                                    locker: results_findEmptyLocker.num,
+                                                    moneyPaid: false
+                                                });
+                                                const results_paySingleOrder = await coll.updateOne({_id: results_findSingleOrder._id},{
+                                                    merchandiseName: results_findSingleOrder.merchandiseName,
+                                                    description: results_findSingleOrder.description,
+                                                    price: results_findSingleOrder.price,
+                                                    sellerName: results_findSingleOrder.sellerName,
+                                                    sellerCoinbase: results_findSingleOrder.sellerCoinbase,
+                                                    buyerName: results_findSingleOrder.buyerName,
+                                                    buyerCoinbase: results_findSingleOrder.buyerCoinbase,
+                                                    locker: results_findSingleOrder.locker,
+                                                    merchandiseArriveLocker: results_findSingleOrder.merchandiseArriveLocker,
+                                                    moneyPaid: true
+                                                });
+                                                }catch(err){
+                                                    console.log(err);
+                                                }
+                                            }());
+
                                             console.log('BUYER paid: ' + rlt_web3.fromWei(result.args._value, "ether") + ' eth');
                                             console.log('===After buyer payBill, Before seller drawdown:');
                                             console.log('Contract balance is now: ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
-                                            res.redirect('/pay');
+                                            payBillEvent.stopWatching();
                                         }
                                     });
                                     drawdownEvent.watch(function(e, rlt){
@@ -182,13 +222,16 @@ const router = function (nav, contractManager) {
                                             console.log('Contract balance is now (getBalance()): ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
                                             console.log('Contract balance is now (event): ' + rlt_web3.fromWei(rlt.args._value, "ether") + ' eth')
                                             console.log('===Done!===');
+                                            drawdownEvent.stopWatching();
                                         }
                                     });
+
                                 }catch(err){
                                     if(err)
                                         console.log(err);
                                 }
                             }());
+
                         });
                 }catch(err){
                     if(err)

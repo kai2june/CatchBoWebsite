@@ -8,7 +8,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 const port = process.env.PORT || 1916;
-const nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}, {Link: '/buyRecord', Text: 'Buy Record'}, {Link: '/sellRecord', Text: 'Sell Record'}, {Link: '/mailer', Text: 'Mailman'}, {Link: '/pay', Text: 'Pay for unlock'}];
+const nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}, {Link: '/buyRecord', Text: 'Buy Record'}, {Link: '/sellRecord', Text: 'Sell Record'}, {Link: '/mailer', Text: 'Mailman'}];
 const ContractManager = require('./scm');
 const fs = require('fs');
 
