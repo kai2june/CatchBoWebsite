@@ -147,9 +147,67 @@ const router = function (nav, contractManager) {
                     merchandiseArriveLocker: false`);
 
                     contractManager.deploy(results_findSingleBook.sellerCoinbase, req.body.buyerCoinbase, results_findSingleBook.price,
-                        function (contract) {
-                            console.log(`In bookRoutes.js contract.address=${contract.address}`);
-                            res.redirect('/pay');
+                        function (address, abi, rlt_web3) {
+                            //console.log(`In bookRoutes.js contract.address=${contract.address}`);
+                            console.log(`In bookRoutes.js contract.address=${address}`);
+
+                            const passwordDefault = "nccutest";
+                            const contractInstance = rlt_web3.eth.contract(abi).at(address);
+                            console.log('===Before payBill():');
+                            console.log('Contract balance is now: ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
+                            console.log('Merchandise price: ' + rlt_web3.fromWei(contractInstance.fee(), "ether") + ' eth');
+                            console.log('Seller\'s coinbase: ' + contractInstance.seller());
+                            console.log('Buyer\'s coinbase: ' + contractInstance.buyer());
+
+                            (async function eventListener(){
+                                try{
+                                    const payBillEvent = contractInstance.ReturnValue({_from: req.body.buyerCoinbase});
+                                    const drawdownEvent = contractInstance.drawdownReturnValue({_from: req.body.sellerCoinbase});
+        
+                                    payBillEvent.watch(function(err, result) {
+                                        if (err) {
+                                            console.log(`payBillWatch error: ${err}`);
+                                        } else {
+                                            console.log('BUYER paid: ' + rlt_web3.fromWei(result.args._value, "ether") + ' eth');
+                                            console.log('===After buyer payBill, Before seller drawdown:');
+                                            console.log('Contract balance is now: ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
+                                        rlt_web3.personal.unlockAccount(results_findSingleBook.sellerCoinbase, passwordDefault);
+                                        contractInstance.drawdown({from: results_findSingleBook.sellerCoinbase}, function(err, rlt){
+                                            if(err)
+                                                console.log(`drawdown error: ${err}`);
+                                            else
+                                                console.log(`We're in drawdown()'s result`);
+                                        });
+                                        }
+                                    });
+                                    drawdownEvent.watch(function(e, rlt){
+                                        if(e){
+                                            console.log(`drawdownWatch error: ${e}`);
+                                        }else{
+                                            console.log('===After seller drawdown:');
+                                            console.log('Contract balance is now (getBalance()): ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
+                                            console.log('Contract balance is now (event): ' + rlt_web3.fromWei(rlt.args._value, "ether") + ' eth')
+                                            console.log('===Done!===');
+                                            res.redirect('/pay');
+                                        }
+                                    });
+                                    rlt_web3.personal.unlockAccount(req.body.buyerCoinbase, passwordDefault);
+                                    await contractInstance.payBill({from: req.body.buyerCoinbase, value: contractInstance.fee()}, function(err,result){
+                                        if(err)
+                                            console.log(`payBill error: ${err}`);
+                                        else{
+                                            if(! result )
+                                                console.log('No result payBill()');
+                                            else{
+                                                console.log(`We're in payBill()'s result`);
+                                            }
+                                        }
+                                    });
+                                }catch(err){
+                                    if(err)
+                                        console.log(err);
+                                }
+                            }());
                         });
                 }catch(err){
                     if(err)
