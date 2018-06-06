@@ -171,13 +171,7 @@ const router = function (nav, contractManager) {
                                             console.log('BUYER paid: ' + rlt_web3.fromWei(result.args._value, "ether") + ' eth');
                                             console.log('===After buyer payBill, Before seller drawdown:');
                                             console.log('Contract balance is now: ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
-                                        rlt_web3.personal.unlockAccount(results_findSingleBook.sellerCoinbase, passwordDefault);
-                                        contractInstance.drawdown({from: results_findSingleBook.sellerCoinbase}, function(err, rlt){
-                                            if(err)
-                                                console.log(`drawdown error: ${err}`);
-                                            else
-                                                console.log(`We're in drawdown()'s result`);
-                                        });
+                                            res.redirect('/pay');
                                         }
                                     });
                                     drawdownEvent.watch(function(e, rlt){
@@ -188,19 +182,6 @@ const router = function (nav, contractManager) {
                                             console.log('Contract balance is now (getBalance()): ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
                                             console.log('Contract balance is now (event): ' + rlt_web3.fromWei(rlt.args._value, "ether") + ' eth')
                                             console.log('===Done!===');
-                                            res.redirect('/pay');
-                                        }
-                                    });
-                                    rlt_web3.personal.unlockAccount(req.body.buyerCoinbase, passwordDefault);
-                                    await contractInstance.payBill({from: req.body.buyerCoinbase, value: contractInstance.fee()}, function(err,result){
-                                        if(err)
-                                            console.log(`payBill error: ${err}`);
-                                        else{
-                                            if(! result )
-                                                console.log('No result payBill()');
-                                            else{
-                                                console.log(`We're in payBill()'s result`);
-                                            }
                                         }
                                     });
                                 }catch(err){
