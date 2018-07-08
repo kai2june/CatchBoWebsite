@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dbd55cd8-d98d-4236-98d9-727115521f78" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/scm/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/scm/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/bookRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/bookRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/payRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/payRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/unlockLocker.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/unlockLocker.ejs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -17,11 +19,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scm/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="560">
-              <caret line="71" column="50" selection-start-line="71" selection-start-column="50" selection-end-line="71" selection-end-column="50" />
+            <state relative-caret-position="1512">
+              <caret line="56" column="17" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="unlockLocker.ejs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/unlockLocker.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -133,6 +144,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -179,14 +191,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../promiseExercise" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.jscs" value="true" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.jscs" value="project" />
@@ -273,15 +284,16 @@
       <workItem from="1527203852760" duration="285000" />
       <workItem from="1527670026556" duration="24000" />
       <workItem from="1527751531964" duration="45000" />
+      <workItem from="1529764148325" duration="53000" />
+      <workItem from="1529824999012" duration="597000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="175695000" />
+    <option name="totallyTimeSpent" value="176345000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.1683434" />
       <window_info anchor="bottom" id="TODO" order="10" />
@@ -315,7 +327,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/bower_components/bootstrap/.bower.json" />
     <entry file="file://$PROJECT_DIR$/public/js/bootstrap.min.js" />
     <entry file="file://$PROJECT_DIR$/public/lib/font-awesome/web-fonts-with-css/css/fontawesome.min.css" />
     <entry file="file://$PROJECT_DIR$/public/lib/bootstrap/.bower.json">
@@ -340,13 +351,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/index.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="805">
-          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/index.ejs" />
     <entry file="file://$PROJECT_DIR$/src/views/Success" />
     <entry file="file://$PROJECT_DIR$/success" />
     <entry file="file://$PROJECT_DIR$/src/views/list.txt" />
@@ -499,13 +504,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/index.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="40" column="47" lean-forward="true" selection-start-line="40" selection-start-column="47" selection-end-line="40" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/index.ejs" />
     <entry file="file://$PROJECT_DIR$/src/routes/sellRoutes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="587">
@@ -578,8 +577,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scm/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="71" column="50" selection-start-line="71" selection-start-column="50" selection-end-line="71" selection-end-column="50" />
+        <state relative-caret-position="1512">
+          <caret line="56" column="17" selection-start-line="56" selection-start-column="17" selection-end-line="56" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/unlockLocker.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
         </state>
       </provider>
     </entry>

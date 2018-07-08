@@ -163,7 +163,7 @@ const router = function (nav, contractManager) {
                             console.log('Merchandise price: ' + rlt_web3.fromWei(contractInstance.fee(), "ether") + ' eth');
                             console.log('Seller\'s coinbase: ' + contractInstance.seller());
                             console.log('Buyer\'s coinbase: ' + contractInstance.buyer());
-
+                            // res.redirect('/pay');
                             (async function eventListener(){
                                 try{
                                     const payBillEvent = contractInstance.ReturnValue({_from: req.body.buyerCoinbase});
