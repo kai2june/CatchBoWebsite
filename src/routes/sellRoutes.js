@@ -16,7 +16,7 @@ const router = function (nav) {
     sellRouter.route('/')
         .get(function (req, res) {
             res.render('sell', {
-                title: 'Books',
+                title: 'CatchBo Store',
                 nav: nav
             });
         });

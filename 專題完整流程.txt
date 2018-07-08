@@ -1,0 +1,21 @@
+1. 接arduino
+2. mongod
+3. node Lock.js
+4. ./startGeth.bat (geth --networkid 12121 .....)
+5. npm start
+6. ./geth attach
+eth.defaultAccount = eth.coinbase
+personal.unlockAccount(personal.listAccounts[0], "nccutest")
+personal.unlockAccount(personal.listAccounts[1], "nccutest")
+personal.unlockAccount(personal.listAccounts[2], "nccutest")
+>  miner.start()
+7. localhost:1916 隨便買樣東西
+8. vim CatchBo.sol.abi
+>  var abi = JSON.parse(' 上一步的 abi ')
+>  var contractInstance = eth.contract(abi).at(' 合約地址 ') (非transaction hash)
+>  web3.fromWei(eth.getBalance(personal.listAccounts[0]))
+>  web3.fromWei(eth.getBalance(personal.listAccounts[1]))
+>  web3.fromWei(eth.getBalance(personal.listAccounts[2]))
+>  contractInstance.payBill({from: contractInstance.buyer(), value: contractInstance.fee() })
+=====自動解鎖=========
+>  contractInstance.drawdown()

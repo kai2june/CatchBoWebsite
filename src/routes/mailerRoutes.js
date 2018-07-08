@@ -42,7 +42,8 @@ const router = function(nav){
                                 buyerName: rlt.buyerName,
                                 buyerCoinbase: rlt.buyerCoinbase,
                                 locker: rlt.locker,
-                                merchandiseArriveLocker: true
+                                merchandiseArriveLocker: true,
+                                moneyPaid: rlt.moneyPaid
                             });
                         }
                     }

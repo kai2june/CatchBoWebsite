@@ -28,7 +28,7 @@ const router = function (nav, contractManager) {
                     const coll = db.collection('books');
                     const results = await coll.find({}).toArray();
                     res.render('bookListView', {
-                        title: 'Books',
+                        title: 'Merchandise',
                         nav: nav,
                         books: results
                     });
@@ -59,7 +59,7 @@ const router = function (nav, contractManager) {
                         const coll = db.collection('books');
                         const results = await coll.findOne({_id: id});
                         res.render('bookView', {
-                            title: 'Books',
+                            title: 'Merchandise',
                             nav: nav,
                             book: results
                         });
@@ -83,7 +83,7 @@ const router = function (nav, contractManager) {
                     const results = await coll.findOne({_id: id});
                     if(results.inventory > 0){
                         res.render('orderForm', {
-                            title: 'Books',
+                            title: 'Merchandise',
                             nav: nav,
                             book: results
                         });
