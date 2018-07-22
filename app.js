@@ -8,7 +8,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 const port = process.env.PORT || 1916;
-const nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}, {Link: '/buyRecord', Text: 'Buy Record'}, {Link: '/sellRecord', Text: 'Sell Record'}, {Link: '/mailer', Text: 'Mailman'}, {Link: '/pay', Text: 'pay then unlock'}];
+const nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}, {Link: '/buyRecord', Text: 'Buy Record'}, {Link: '/sellRecord', Text: 'Sell Record'}, {Link: '/mailer', Text: 'Mailman'}, {Link: '/pay', Text: 'pay then unlock'}, {Link: '/allLockers', Text: 'Lockers state'}];
 const ContractManager = require('./scm');
 const fs = require('fs');
 
@@ -29,6 +29,7 @@ const buyRecordRouter = require('./src/routes/buyRecordRoutes')(nav);
 const sellRecordRouter = require('./src/routes/sellRecordRoutes')(nav);
 const mailerRouter = require('./src/routes/mailerRoutes')(nav);
 const payRouter = require('./src/routes/payRoutes')(nav);
+const allLockersRouter = require('./src/routes/allLockersRoutes')(nav);
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -48,6 +49,7 @@ app.use('/buyRecord', buyRecordRouter);
 app.use('/sellRecord', sellRecordRouter);
 app.use('/mailer', mailerRouter);
 app.use('/pay', payRouter);
+app.use('/allLockers', allLockersRouter);
 
 // 當有client連上server
 io.on('connection', function(socket){

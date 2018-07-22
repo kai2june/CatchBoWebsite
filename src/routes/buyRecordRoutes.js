@@ -29,7 +29,11 @@ const router = function(nav){
                     };
                     const rlt = await coll.find({buyerName: username}).toArray();
                     console.log(`2 ${req.user.username}`);
-                    res.send(rlt);
+                    //res.send(rlt);
+                    res.render('buyRecord', {
+                        nav: nav,
+                        buyRecord: rlt
+                    });
                     db.close();
                 }catch(err){
                     console.log(err);

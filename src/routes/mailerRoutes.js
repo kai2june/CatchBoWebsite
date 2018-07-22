@@ -14,11 +14,16 @@ const router = function(nav){
     });
     mailerRouter.route('/')
         .get( (req,res) => {
-            res.render('mailer');
+            res.render('mailer', {
+                nav: nav
+            });
         });
     mailerRouter.route('/success')
         .post( (req,res) => {
-            res.send(req.body);
+            res.render( 'mailerSuccess', {
+                nav: nav,
+                locker: req.body.locker
+            });
             const {locker} = req.body;
             console.log(locker);
             

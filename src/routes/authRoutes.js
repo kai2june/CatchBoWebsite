@@ -43,7 +43,11 @@ const router = function (nav) {
             next();
         })
         .get(function (req, res) {
-            res.json(req.user);
+            // res.json(req.user);
+            res.render('userProfile', {
+                nav: nav,
+                user: req.user
+            });
         });
     return authRouter;
 };

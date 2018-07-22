@@ -105,18 +105,20 @@
 
                         </div>
                         <div class="col-md-10 col-sm-9">
-                            <form name="mailerLocker" action="/mailer/success" method="post">
-                                <h3>Please select the lockers you put merchandise into.</h3><br>
-                                <h3><input type="checkbox" value="1" name="locker">locker 1</h3><br>
-                                <h3><input type="checkbox" value="2" name="locker">locker 2</h3><br>
-                                <h3><input type="checkbox" value="3" name="locker">locker 3</h3><br>
-                                <h3><input type="checkbox" value="4" name="locker">locker 4</h3><br>
-                                <h3><input type="checkbox" value="5" name="locker">locker 5</h3><br>
-                                <h3><input type="checkbox" value="6" name="locker">locker 6</h3><br>
-                                <h3><input type="checkbox" value="7" name="locker">locker 7</h3><br>
-                                <h3><input type="checkbox" value="8" name="locker">locker 8</h3><br>
-                                <input type="submit" value="submit">   
-                            </form>
+                            <%for(let i = 0; i < sellRecord.length; i++){%>
+                                <h1>Order <%=i+1%>:</h1>
+                                <h4>_id: <%=sellRecord[i]._id%></h4>
+                                <h4>merchandiseName: <%=sellRecord[i].merchandiseName%></h4>
+                                <h4>description: <%=sellRecord[i].description%></h4>
+                                <h4>price: <%=sellRecord[i].price%></h4>
+                                <h4>sellerName: <%=sellRecord[i].sellerName%></h4>
+                                <h4>sellerCoinbase: <%=sellRecord[i].sellerCoinbase%></h4>
+                                <h4>buyerName: <%=sellRecord[i].buyerName%></h4>
+                                <h4>buyerCoinbase: <%=sellRecord[i].buyerCoinbase%></h4>
+                                <h4>locker: <%=sellRecord[i].locker%></h4>
+                                <h4>merchandiseArriveLocker: <%=sellRecord[i].merchandiseArriveLocker%></h4>
+                                <h4>moneyPaid: <%=sellRecord[i].moneyPaid%></h4><br>
+                            <%}%>
                         </div>
                     </div>
                     <hr>

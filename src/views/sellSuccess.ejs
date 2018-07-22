@@ -105,18 +105,12 @@
 
                         </div>
                         <div class="col-md-10 col-sm-9">
-                            <form name="mailerLocker" action="/mailer/success" method="post">
-                                <h3>Please select the lockers you put merchandise into.</h3><br>
-                                <h3><input type="checkbox" value="1" name="locker">locker 1</h3><br>
-                                <h3><input type="checkbox" value="2" name="locker">locker 2</h3><br>
-                                <h3><input type="checkbox" value="3" name="locker">locker 3</h3><br>
-                                <h3><input type="checkbox" value="4" name="locker">locker 4</h3><br>
-                                <h3><input type="checkbox" value="5" name="locker">locker 5</h3><br>
-                                <h3><input type="checkbox" value="6" name="locker">locker 6</h3><br>
-                                <h3><input type="checkbox" value="7" name="locker">locker 7</h3><br>
-                                <h3><input type="checkbox" value="8" name="locker">locker 8</h3><br>
-                                <input type="submit" value="submit">   
-                            </form>
+                            user: <%=merchandise.user%><br/>
+                            merchandise: <%=merchandise.name%><br/>
+                            description: <%=merchandise.description%><br/>
+                            inventory: <%=merchandise.inventory%><br/>
+                            price: <%=merchandise.price%><br/>
+                            sellerCoinbase: <%=merchandise.sellerCoinbase%><br/>
                         </div>
                     </div>
                     <hr>

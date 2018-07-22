@@ -39,7 +39,10 @@ const router = function (nav) {
                         sellerCoinbase: req.body.sellerCoinbase
                     };
                     const results = await coll.insertOne(merchandise);
-                    res.send(results.ops[0]);
+                    res.render('sellSuccess',{
+                        nav:nav,
+                        merchandise: results.ops[0]
+                    });
                     db.close();
                 }catch(err){
                     console.log(err);
