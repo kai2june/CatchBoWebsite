@@ -89,7 +89,11 @@ const router = function(nav){
                         }
                     }
 
-                    res.send(rlt_findManyOrders);
+                    res.render('mailerSuccess', {
+                        nav: nav,
+                        locker: req.body.locker,
+                        order: rlt_findManyOrders
+                    });
                     db.close();
                 }catch(err){
                     console.log(err);

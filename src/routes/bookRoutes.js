@@ -52,7 +52,9 @@ const router = function (nav, contractManager) {
                     const results = await coll.findOne({state: 'empty'});
                     db.close();
                     if(!results){
-                        res.send('There is no locker available.');
+                        res.render('noLockerAvailable', {
+                            nav: nav
+                        });
                     }else{
                         const client = await MongoClient.connect(url);
                         const db = client.db(dbName);
@@ -88,7 +90,9 @@ const router = function (nav, contractManager) {
                             book: results
                         });
                     }else{
-                        res.send('Failed due to inventory equals 0');
+                        res.render('noInventory', {
+                            nav: nav
+                        });
                     }
                     db.close();
                 }catch(err){

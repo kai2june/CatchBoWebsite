@@ -44,7 +44,7 @@
             </ul>
             <ul class="nav navbar-right navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i></a>
+                    <a href="/auth/logout" class="dropdown-toggle">logout</a>
                     <ul class="dropdown-menu" style="padding:12px;">
                         <form class="form-inline">
                             <button type="submit" class="btn btn-default pull-right"><i class="glyphicon glyphicon-search"></i></button><input type="text" class="form-control pull-left" placeholder="Search">
@@ -105,12 +105,12 @@
 
                         </div>
                         <div class="col-md-10 col-sm-9">
-                            user: <%=merchandise.user%><br/>
-                            merchandise: <%=merchandise.name%><br/>
-                            description: <%=merchandise.description%><br/>
-                            inventory: <%=merchandise.inventory%><br/>
-                            price: <%=merchandise.price%><br/>
-                            sellerCoinbase: <%=merchandise.sellerCoinbase%><br/>
+                            <h3>user: <%=merchandise.user%></h3>
+                            <h3>merchandise: <%=merchandise.name%></h3>
+                            <h3>description: <%=merchandise.description%></h3>
+                            <h3>inventory: <%=merchandise.inventory%></h3>
+                            <h3>price: <%=merchandise.price%></h3>
+                            <h3>sellerCoinbase: <%=merchandise.sellerCoinbase%></h3>
                         </div>
                     </div>
                     <hr>

@@ -35,6 +35,11 @@ const router = function (nav) {
         }), function (req, res) {
             res.redirect('/auth/profile');
         });
+    authRouter.route('/logout')
+        .get( (req,res) =>{
+            req.logout();
+            res.redirect('/');
+        });
     authRouter.route('/profile')
         .all(function(req,res,next){
             if(!req.user){
