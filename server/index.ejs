@@ -115,8 +115,8 @@
 							　		<option value="10min">10 分鐘</option>
 								</select>
 							</form> -->
-
 							<button type="button" onclick="rentGogoro()">解鎖!!!</button>
+                            
                         </div>
                     </div>
                     <hr>
@@ -205,7 +205,7 @@
 		// var socket = io.connect('http://192.168.43.173:1337');
 		// change to pi's IP
 		//var socket = io.connect('http://172.20.10.13:1337');
-		 var socket = io.connect('http://127.0.0.1:1336');
+		var socket = io.connect('http://127.0.0.1:1336');
 		socket.on('news', function (data) {
 			console.log(data);
 			// socket.emit('my other event', { my: 'data' });

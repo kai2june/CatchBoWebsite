@@ -6,7 +6,7 @@ const objectId = require('mongodb').ObjectID;
 const router = function(nav){
     
     mailerRouter.use(function (req, res, next) {
-        if (!req.user || (req.user.username != 'mailer') ) {
+        if (!req.user || (req.user.username != 'nccu_delivery_company') ) {
             res.redirect('/');
         }
         else {

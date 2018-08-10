@@ -57,6 +57,10 @@ const router = function(nav){
                 }
             }());
         });
+    payRouter.route('/success')
+        .post( (req,res) => {
+            res.send('succccccccess');
+        })
 
 
     return payRouter;
