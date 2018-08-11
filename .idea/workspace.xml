@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbd55cd8-d98d-4236-98d9-727115521f78" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/bookRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/bookRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/payRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/payRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/unlockLocker.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/unlockLocker.ejs" afterDir="false" />
-    </list>
+    <list default="true" id="dbd55cd8-d98d-4236-98d9-727115521f78" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -32,7 +27,7 @@
         <entry file="file://$PROJECT_DIR$/src/views/unlockLocker.ejs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="162">
-              <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+              <caret line="191" column="44" selection-start-line="191" selection-start-column="44" selection-end-line="191" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -197,7 +192,7 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../walletForCatchBo" />
     <property name="node.js.detected.package.jscs" value="true" />
     <property name="node.js.detected.package.prettier" value="true" />
     <property name="node.js.path.for.package.jscs" value="project" />
@@ -286,11 +281,12 @@
       <workItem from="1527751531964" duration="45000" />
       <workItem from="1529764148325" duration="53000" />
       <workItem from="1529824999012" duration="597000" />
+      <workItem from="1533957493055" duration="52000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176345000" />
+    <option name="totallyTimeSpent" value="176397000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -585,7 +581,7 @@
     <entry file="file://$PROJECT_DIR$/src/views/unlockLocker.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
-          <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+          <caret line="191" column="44" selection-start-line="191" selection-start-column="44" selection-end-line="191" selection-end-column="44" />
         </state>
       </provider>
     </entry>

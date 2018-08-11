@@ -8,7 +8,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 const port = process.env.PORT || 1916;
-const nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}, {Link: '/buyRecord', Text: 'Buy Record'}, {Link: '/sellRecord', Text: 'Sell Record'}, {Link: '/mailer', Text: 'Mailman'}, {Link: '/pay', Text: 'pay then unlock'}, {Link: '/allLockers', Text: 'Lockers state'}];
+const nav = [{Link: '/Books', Text: 'Buy Things'}, {Link: '/Sell', Text: 'Sell Things'}, {Link: '/buyRecord', Text: 'Buy Record'}, {Link: '/sellRecord', Text: 'Sell Record'}, {Link: '/mailer', Text: 'Mailman'}, {Link: '/pay', Text: 'pay then unlock'}, {Link: '/allLockers', Text: 'Lockers state'}, {Link: '/walletForCatchBo', Text: 'Wallet For CatchBo'}];
 const ContractManager = require('./scm');
 const fs = require('fs');
 
@@ -30,6 +30,7 @@ const sellRecordRouter = require('./src/routes/sellRecordRoutes')(nav);
 const mailerRouter = require('./src/routes/mailerRoutes')(nav);
 const payRouter = require('./src/routes/payRoutes')(nav);
 const allLockersRouter = require('./src/routes/allLockersRoutes')(nav);
+const walletForCatchBoRouter = require('./src/routes/walletForCatchBoRoutes')(nav, contractManager);
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -50,6 +51,7 @@ app.use('/sellRecord', sellRecordRouter);
 app.use('/mailer', mailerRouter);
 app.use('/pay', payRouter);
 app.use('/allLockers', allLockersRouter);
+app.use('/walletForCatchBo', walletForCatchBoRouter);
 
 // 當有client連上server
 io.on('connection', function(socket){

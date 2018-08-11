@@ -173,6 +173,8 @@ const router = function (nav, contractManager) {
                                     const payBillEvent = contractInstance.ReturnValue({_from: req.body.buyerCoinbase});
                                     const drawdownEvent = contractInstance.drawdownReturnValue({_from: req.body.sellerCoinbase});
                                     res.redirect('/pay');
+                                    contractInstance.payBill({from: req.body.buyerCoinbase, value: rlt_web3.toWei(results_findSingleBook.price, "ether")});
+                                    contractInstance.drawdown({from: results_findSingleBook.sellerCoinbase});
                                     payBillEvent.watch(function(err, result) {
                                         if (err) {
                                             console.log(`payBillWatch error: ${err}`);

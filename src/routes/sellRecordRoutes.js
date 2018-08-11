@@ -9,7 +9,6 @@ const router = function(nav){
             res.redirect('/');
         }
         else {
-            console.log(`3 ${req.user.username}`);
             next();
         }
     });
