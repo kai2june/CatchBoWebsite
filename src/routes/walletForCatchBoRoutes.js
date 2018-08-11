@@ -27,10 +27,15 @@ const router = function(nav, contractManager){
             this.web3 = new Web3(new Web3.providers.HttpProvider(httpProviderDefault));
             this.web3.personal.unlockAccount(req.body.coinbase, req.body.passphrase);
             const contractInstance = contractManager.contractInstance;
-            contractInstance.payBill({from: contractInstance.buyer(), value: contractInstance.fee()});
-            contractInstance.drawdown({from: contractInstance.seller()});
+            (async function payBill_drawdown(){
+                await contractInstance.payBill({from: contractInstance.buyer(), value: contractInstance.fee()});
+                await contractInstance.drawdown({from: contractInstance.seller()});
+            }())
 
-            res.send(`fee:${contractInstance.fee()}, seller:${contractInstance.seller()}, buyer:${contractInstance.buyer()}, contractAddress:${contractInstance.address}, thisTransactionHash:${contractInstance.transactionHash}`);
+            res.render('walletForCatchBoSuccess',{
+                    nav: nav,
+                    contractInstance: contractInstance
+                });
         })
 
     return walletForCatchBoRouter;

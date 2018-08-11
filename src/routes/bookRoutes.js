@@ -7,6 +7,9 @@ const compiler = require('solc');
 const fs = require('fs');
 const client = require('socket.io');
 
+const url = 'mongodb://localhost:27017';
+const dbName = 'libraryApp';
+
 const router = function (nav, contractManager) {
 
     bookRouter.use(function (req, res, next) {
@@ -103,8 +106,7 @@ const router = function (nav, contractManager) {
     bookRouter.route('/:id/orderForm/success')
         .post(function (req, res) {
             const id = new objectId(req.params.id);
-            const url = 'mongodb://localhost:27017';
-            const dbName = 'libraryApp';
+
 
             (async function placeOrder(){
                 try{
@@ -130,21 +132,22 @@ const router = function (nav, contractManager) {
                         sellerCoinbase: results_findSingleBook.sellerCoinbase
                     });
                     // db.close();
-                    const coll_orders = db.collection('orders');
-                    const results_insertSingleOrder = await coll_orders.insertOne({
-                        merchandiseName: results_findSingleBook.name,
-                        description: results_findSingleBook.description,
-                        price: results_findSingleBook.price,
-                        sellerName: results_findSingleBook.user,
-                        sellerCoinbase: results_findSingleBook.sellerCoinbase,
-                        buyerName: req.user.username,
-                        buyerCoinbase: req.body.buyerCoinbase,
-                        locker: results_findEmptyLocker.num,
-                        merchandiseArriveLocker: false,
-                        moneyPaid: false
-                    });
-                    db.close();
-                    console.log(`SUCCESS merchandiseName: ${results_findSingleBook.name},
+                    // const coll_orders = db.collection('orders');
+                    // results_insertSingleOrder = await coll_orders.insertOne({
+                    //     merchandiseName: results_findSingleBook.name,
+                    //     description: results_findSingleBook.description,
+                    //     price: results_findSingleBook.price,
+                    //     sellerName: results_findSingleBook.user,
+                    //     sellerCoinbase: results_findSingleBook.sellerCoinbase,
+                    //     buyerName: req.user.username,
+                    //     buyerCoinbase: req.body.buyerCoinbase,
+                    //     locker: results_findEmptyLocker.num,
+                    //     merchandiseArriveLocker: false,
+                    //     moneyPaid: false
+                    // });
+                    //db.close();
+                    console.log(`SUCCESS
+                    merchandiseName: ${results_findSingleBook.name},
                     description: ${results_findSingleBook.description},
                     price: ${results_findSingleBook.price},
                     sellerName: ${results_findSingleBook.user},
@@ -153,12 +156,33 @@ const router = function (nav, contractManager) {
                     buyerCoinbase: ${req.body.buyerCoinbase},
                     locker: ${results_findEmptyLocker.num},
                     merchandiseArriveLocker: false,
-                    moneyPaid: false`);
+                    moneyPaid: false,
+                    smartContractAddress: ""`);
 
                     contractManager.deploy(results_findSingleBook.sellerCoinbase, req.body.buyerCoinbase, results_findSingleBook.price,
                         function (address, abi, rlt_web3) {
                             //console.log(`In bookRoutes.js contract.address=${contract.address}`);
                             console.log(`In bookRoutes.js contract.address=${address}`);
+
+                            (async function patchSmartContractAddress(){
+                                const client = await MongoClient.connect(url);
+                                const db = client.db(dbName);
+                                const coll_orders = db.collection('orders');
+                                const results_insertSingleOrder = await coll_orders.insertOne({
+                                    merchandiseName: results_findSingleBook.name,
+                                    description: results_findSingleBook.description,
+                                    price: results_findSingleBook.price,
+                                    sellerName: results_findSingleBook.user,
+                                    sellerCoinbase: results_findSingleBook.sellerCoinbase,
+                                    buyerName: req.user.username,
+                                    buyerCoinbase: req.body.buyerCoinbase,
+                                    locker: results_findEmptyLocker.num,
+                                    merchandiseArriveLocker: false,
+                                    moneyPaid: false,
+                                    smartContractAddress: address
+                                });
+                            }());
+                          
 
                             const passwordDefault = "nccutest";
                             const contractInstance = rlt_web3.eth.contract(abi).at(address);
@@ -204,7 +228,8 @@ const router = function (nav, contractManager) {
                                                 buyerCoinbase: results_findSingleOrder.buyerCoinbase,
                                                 locker: results_findSingleOrder.locker,
                                                 merchandiseArriveLocker: results_findSingleOrder.merchandiseArriveLocker,
-                                                moneyPaid: true
+                                                moneyPaid: true,
+                                                smartContractAddress: results_findSingleOrder.smartContractAddress
                                             });
                                         }catch(err){
                                             console.log(err);
