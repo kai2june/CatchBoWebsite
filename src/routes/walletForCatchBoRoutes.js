@@ -26,9 +26,11 @@ const router = function(nav, contractManager){
             const httpProviderDefault = 'http://localhost:8545';
             this.web3 = new Web3(new Web3.providers.HttpProvider(httpProviderDefault));
             this.web3.personal.unlockAccount(req.body.coinbase, req.body.passphrase);
-            const contractInstance = contractManager.findAt(req.body.smartContractAddress);
+            const contractInstance = contractManager.contractInstance;
             contractInstance.payBill({from: contractInstance.buyer(), value: contractInstance.fee()});
-            res.send(`${contractInstance.fee()}, ${contractInstance.seller()}, ${contractInstance.buyer()}`);
+            contractInstance.drawdown({from: contractInstance.seller()});
+
+            res.send(`fee:${contractInstance.fee()}, seller:${contractInstance.seller()}, buyer:${contractInstance.buyer()}, contractAddress:${contractInstance.address}, thisTransactionHash:${contractInstance.transactionHash}`);
         })
 
     return walletForCatchBoRouter;

@@ -229,8 +229,8 @@ const router = function (nav, contractManager) {
                                 }
                             });
 
-                            contractInstance.payBill({from: req.body.buyerCoinbase, value: rlt_web3.toWei(results_findSingleBook.price, "ether")});
-                            contractInstance.drawdown({from: results_findSingleBook.sellerCoinbase});
+                            // contractInstance.payBill({from: req.body.buyerCoinbase, value: rlt_web3.toWei(results_findSingleBook.price, "ether")});
+                            // contractInstance.drawdown({from: results_findSingleBook.sellerCoinbase});
                         });
 
                 }catch(err){

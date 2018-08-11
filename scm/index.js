@@ -53,6 +53,7 @@ class ContractManager {
                     console.log('Contract transaction send: Transaction Hash: ' + contract.transactionHash + ' waiting to be mined...');
                 if (contract && contract.address) {
                     console.log('Contract mined... that.account: ' + that.account + ' contract.address: ' + contract.address);
+                    that.contractInstance = c.at(contract.address);
                     callback(contract.address, that.abi, that.web3);
                 }
             });
