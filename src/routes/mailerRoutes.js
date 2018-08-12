@@ -50,7 +50,8 @@ const router = function(nav){
                             buyerCoinbase: rlt_findManyOrders[0].buyerCoinbase,
                             locker: rlt_findManyOrders[0].locker,
                             merchandiseArriveLocker: true,
-                            moneyPaid: rlt_findManyOrders[0].moneyPaid
+                            moneyPaid: rlt_findManyOrders[0].moneyPaid,
+                            smartContractAddress: rlt_findManyOrders[0].smartContractAddress
                         })
                     } else{
                         let query_arr = [];
@@ -82,7 +83,8 @@ const router = function(nav){
                                     buyerCoinbase: rlt_findManyOrders[i].buyerCoinbase,
                                     locker: rlt_findManyOrders[i].locker,
                                     merchandiseArriveLocker: true,
-                                    moneyPaid: rlt_findManyOrders[i].moneyPaid
+                                    moneyPaid: rlt_findManyOrders[i].moneyPaid,
+                                    smartContractAddress: rlt_findManyOrders[i].smartContractAddress
                                 });
                             }
                             already_find[locker] = true;
