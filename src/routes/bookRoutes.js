@@ -191,10 +191,9 @@ const router = function (nav, contractManager) {
                             console.log('Merchandise price: ' + rlt_web3.fromWei(contractInstance.fee(), "ether") + ' eth');
                             console.log('Seller\'s coinbase: ' + contractInstance.seller());
                             console.log('Buyer\'s coinbase: ' + contractInstance.buyer());
-                            // res.redirect('/pay');
                             const payBillEvent = contractInstance.ReturnValue({_from: req.body.buyerCoinbase});
                             const drawdownEvent = contractInstance.drawdownReturnValue({_from: req.body.sellerCoinbase});
-                            res.redirect('/pay');
+                            res.redirect('/walletForCatchBo');
                             
                             payBillEvent.watch(function(err, result) {
                                 if (err) {

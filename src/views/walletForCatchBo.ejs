@@ -108,8 +108,15 @@
                     <input name="coinbase" id="coinbase"><br>
                     Passphrase:
                     <input name="passphrase" id="passphrase"><br>
-                    Smart Contract Address:(Find in "buyRecord")
-                    <input name="smartContractAddress" id="smartContractAddress"><br>
+                    Not paid yet orders:
+                    <select name="smartContractAddress" id="smartContractAddress">
+                        <option value="#">#</option>
+                        <% for(var i=0; i<currentUserOrders.length; i++){%>
+                            <option value="<%=currentUserOrders[i].smartContractAddress%>">
+                                <%=currentUserOrders[i].merchandiseName%>, <%=currentUserOrders[i].price%>eth, seller: <%=currentUserOrders[i].sellerName%>, locker: <%=currentUserOrders[i].locker%>, merchandiseArriveLocker: <%=currentUserOrders[i].merchandiseArriveLocker%>, moneyPaid: <%=currentUserOrders[i].moneyPaid%>
+                            </option>
+                        <%}%>
+                    </select>
                     <input type="submit" value="pay">
                 </form>
             </div>

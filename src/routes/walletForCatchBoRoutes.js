@@ -17,12 +17,27 @@ const router = function(nav, contractManager){
     });
     walletForCatchBoRouter.route('/')
         .get( (req,res) => {
-            res.render('walletForCatchBo', {
-                nav: nav
-            })
+            const url = 'mongodb://localhost:27017';
+            const dbName = 'libraryApp';
+
+            (async function findAllSmartContractAddress(){
+                try{
+                    const client = await MongoClient.connect(url);
+                    const db = client.db(dbName);
+                    const coll = db.collection('orders');
+                    const currentUserOrders = await coll.find({buyerName: req.user.username, moneyPaid: false}).toArray();
+                    res.render('walletForCatchBo', {
+                        nav: nav,
+                        currentUserOrders: currentUserOrders
+                    })
+                } catch(err){
+                    console.log(err);
+                }
+            }());
     });
     walletForCatchBoRouter.route('/success')
         .post( (req, res) => {
+            console.log(`smartContractAddress: ${req.body.smartContractAddress}`)
             const httpProviderDefault = 'http://localhost:8545';
             this.web3 = new Web3(new Web3.providers.HttpProvider(httpProviderDefault));
             this.web3.personal.unlockAccount(req.body.coinbase, req.body.passphrase);

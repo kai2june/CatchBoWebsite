@@ -16,12 +16,27 @@ const router = function(nav){
         }
     });
     payRouter.get('/', (req,res) => {
-            res.render('unlockLocker', {
-                nav: nav
-            });
+            (async function findAllUserOrders(){
+                try{
+                    const url = 'mongodb://localhost:27017';
+                    const dbName = 'libraryApp';
+
+                    const client = await MongoClient.connect(url);
+                    const db = client.db(dbName);
+                    const coll = db.collection('orders');
+                    const currentUserOrders = await coll.find({buyerName: req.user.username, moneyPaid: true}).toArray();
+                    res.render('unlockLocker', {
+                        nav: nav,
+                        currentUserOrders: currentUserOrders
+                    });
+                } catch(err) {
+                    console.log(err);
+                }
+            }());
         })
         .post('/', (req,res) => {
             const id = new objectId(req.body.orderId);
+            console.log(`orderId: ${req.body.orderId}`);
             (async function moneyPaid(){
                 const url = 'mongodb://localhost:27017';
                 const dbName = 'libraryApp';
@@ -60,6 +75,11 @@ const router = function(nav){
     payRouter.route('/success')
         .post( (req,res) => {
             res.send('succccccccess');
+        })
+        .get( (req,res) => {
+            res.render('../../server/index', {
+                nav: nav
+            });
         })
 
 

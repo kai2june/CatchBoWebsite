@@ -107,7 +107,7 @@
                         <div class="col-md-10 col-sm-9">
                             <%for(let i = 0; i < buyRecord.length; i++){%>
                                 <h1>Order <%=i+1%>:</h1>
-                                <h4>_id: <a href="/pay" style="color: red"><u><%=buyRecord[i]._id%></u></a></h4>
+                                <h4>_id: <%=buyRecord[i]._id%></h4>
                                 <h4>merchandiseName: <%=buyRecord[i].merchandiseName%></h4>
                                 <h4>description: <%=buyRecord[i].description%></h4>
                                 <h4>price: <%=buyRecord[i].price%> eth</h4>
@@ -118,7 +118,7 @@
                                 <h4>locker: <%=buyRecord[i].locker%></h4>
                                 <h4>merchandiseArriveLocker: <%=buyRecord[i].merchandiseArriveLocker%></h4>
                                 <h4>moneyPaid: <%=buyRecord[i].moneyPaid%></h4>
-                                <h4>smartContractAddress: <a href="/walletForCatchBo" style="color: blue"><u><%=buyRecord[i].smartContractAddress%></u></a></h4><br>
+                                <h4>smartContractAddress: <%=buyRecord[i].smartContractAddress%></h4><br>
                             <%}%>
                         </div>
                     </div>
