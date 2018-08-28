@@ -15,14 +15,20 @@ const router = function (nav) {
                     const client = await MongoClient.connect(url);
                     const db = client.db(dbName);
                     const coll = db.collection('users');
-                    const user = {
-                        username: req.body.userName,
-                        password: req.body.password
-                    };
-                    const results = await coll.insertOne(user);
-                    req.login( results.ops[0], () => {
-                        res.redirect('/auth/profile');
-                    });
+                    const rlt_checkDuplicateUsername = await coll.findOne({username: req.body.userName});
+                    if(rlt_checkDuplicateUsername){
+                        console.log('Duplicate name');
+                        res.redirect('/');
+                    } else {
+                        const user = {
+                            username: req.body.userName,
+                            password: req.body.password
+                        };
+                        const results = await coll.insertOne(user);
+                        req.login( results.ops[0], () => {
+                            res.redirect('/auth/profile');
+                        });
+                    }
                     db.close();
                 }catch(err){
                     console.log(err);
