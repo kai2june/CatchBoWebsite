@@ -111,11 +111,11 @@
                                     <option value="#">#</option>
                                     <%for(var i = 0; i<currentUserOrders.length; i++){%>
                                         <option value="<%=currentUserOrders[i]._id%>">
-                                            _id: <%=currentUserOrders[i]._id%>, <%=currentUserOrders[i].merchandiseName%>, <%=currentUserOrders[i].price%>eth, seller: <%=currentUserOrders[i].sellerName%>, locker: <%=currentUserOrders[i].locker%>, merchandiseArriveLocker: <%=currentUserOrders[i].merchandiseArriveLocker%>, moneyPaid: <%=currentUserOrders[i].moneyPaid%>
+                                            _id: <%=currentUserOrders[i]._id%>, <%=currentUserOrders[i].merchandiseName%>, <%=currentUserOrders[i].price%>eth, seller: <%=currentUserOrders[i].sellerName%>, locker: <%=currentUserOrders[i].locker%>, merchandiseArriveLocker: <%=currentUserOrders[i].merchandiseArriveLocker%>, moneyPaid: <%=currentUserOrders[i].moneyPaid%>, buyerHasEverUnlockedLocker: <%=currentUserOrders[i].buyerHasEverUnlockedLocker%>
                                         </option>
                                     <%}%>
                                 </select>
-                                <input type="submit" value="submit">
+                                <br><input type="submit" value="submit">
                             </form>
                         </div>
                     </div>

@@ -24,7 +24,7 @@ const router = function(nav){
                     const client = await MongoClient.connect(url);
                     const db = client.db(dbName);
                     const coll = db.collection('orders');
-                    const currentUserOrders = await coll.find({buyerName: req.user.username, moneyPaid: true}).toArray();
+                    const currentUserOrders = await coll.find({buyerName: req.user.username, moneyPaid: true, buyerHasEverUnlockedLocker: false}).toArray();
                     res.render('unlockLocker', {
                         nav: nav,
                         currentUserOrders: currentUserOrders
@@ -63,6 +63,20 @@ const router = function(nav){
                         });
                     }
                     else{
+                        const rlt_updateBuyerHasEverUnlockedLocker = await coll.updateOne({_id: id}, {
+                            merchandiseName: results_findSingleOrder.merchandiseName,
+                            description: results_findSingleOrder.description,
+                            price: results_findSingleOrder.price,
+                            sellerName: results_findSingleOrder.sellerName,
+                            sellerCoinbase: results_findSingleOrder.sellerCoinbase,
+                            buyerName: results_findSingleOrder.buyerName,
+                            buyerCoinbase: results_findSingleOrder.buyerCoinbase,
+                            smartContractAddress: results_findSingleOrder.smartContractAddress,
+                            locker: results_findSingleOrder.locker,
+                            merchandiseArriveLocker: results_findSingleOrder.merchandiseArriveLocker,
+                            moneyPaid: results_findSingleOrder.moneyPaid,
+                            buyerHasEverUnlockedLocker: true
+                        })
                         res.render('../../server/index', {
                             nav: nav
                         });

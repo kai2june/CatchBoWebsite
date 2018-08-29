@@ -61,10 +61,11 @@ const router = function(nav, contractManager){
                     sellerCoinbase: rlt_findBySmartContractAddress.sellerCoinbase,
                     buyerName: rlt_findBySmartContractAddress.buyerName,
                     buyerCoinbase: rlt_findBySmartContractAddress.buyerCoinbase,
+                    smartContractAddress: rlt_findBySmartContractAddress.smartContractAddress,
                     locker: rlt_findBySmartContractAddress.locker,
                     merchandiseArriveLocker: rlt_findBySmartContractAddress.merchandiseArriveLocker,
                     moneyPaid: true,
-                    smartContractAddress: rlt_findBySmartContractAddress.smartContractAddress
+                    buyerHasEverUnlockedLocker: rlt_findBySmartContractAddress.buyerHasEverUnlockedLocker 
                 });
                 res.render('walletForCatchBoSuccess',{
                     nav: nav,

@@ -154,10 +154,11 @@ const router = function (nav, contractManager) {
                     sellerCoinbase: ${results_findSingleBook.sellerCoinbase},
                     buyerName: ${req.user.username},
                     buyerCoinbase: ${req.body.buyerCoinbase},
+                    smartContractAddress: ToBeAssigned,
                     locker: ${results_findEmptyLocker.num},
                     merchandiseArriveLocker: false,
                     moneyPaid: false,
-                    smartContractAddress: ToBeAssigned`);
+                    buyerHasEverUnlockedLocker: false`);
 
                     contractManager.deploy(results_findSingleBook.sellerCoinbase, req.body.buyerCoinbase, results_findSingleBook.price,
                         function (address, abi, rlt_web3) {
@@ -176,10 +177,11 @@ const router = function (nav, contractManager) {
                                     sellerCoinbase: results_findSingleBook.sellerCoinbase,
                                     buyerName: req.user.username,
                                     buyerCoinbase: req.body.buyerCoinbase,
+                                    smartContractAddress: address,
                                     locker: results_findEmptyLocker.num,
                                     merchandiseArriveLocker: false,
                                     moneyPaid: false,
-                                    smartContractAddress: address
+                                    buyerHasEverUnlockedLocker: false
                                 });
                             }());
                           

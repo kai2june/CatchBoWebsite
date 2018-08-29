@@ -48,10 +48,11 @@ const router = function(nav){
                             sellerCoinbase: rlt_findManyOrders[0].sellerCoinbase,
                             buyerName: rlt_findManyOrders[0].buyerName,
                             buyerCoinbase: rlt_findManyOrders[0].buyerCoinbase,
+                            smartContractAddress: rlt_findManyOrders[0].smartContractAddress,
                             locker: rlt_findManyOrders[0].locker,
                             merchandiseArriveLocker: true,
                             moneyPaid: rlt_findManyOrders[0].moneyPaid,
-                            smartContractAddress: rlt_findManyOrders[0].smartContractAddress
+                            buyerHasEverUnlockedLocker: rlt_findManyOrders[0].buyerHasEverUnlockedLocker
                         })
                     } else{
                         let query_arr = [];
@@ -81,10 +82,11 @@ const router = function(nav){
                                     sellerCoinbase: rlt_findManyOrders[i].sellerCoinbase,
                                     buyerName: rlt_findManyOrders[i].buyerName,
                                     buyerCoinbase: rlt_findManyOrders[i].buyerCoinbase,
+                                    smartContractAddress: rlt_findManyOrders[i].smartContractAddress,
                                     locker: rlt_findManyOrders[i].locker,
                                     merchandiseArriveLocker: true,
                                     moneyPaid: rlt_findManyOrders[i].moneyPaid,
-                                    smartContractAddress: rlt_findManyOrders[i].smartContractAddress
+                                    buyerHasEverUnlockedLocker: rlt_findManyOrders[i].buyerHasEverUnlockedLocker
                                 });
                             }
                             already_find[locker] = true;
