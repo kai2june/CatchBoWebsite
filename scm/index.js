@@ -36,6 +36,11 @@ class ContractManager {
         this.abi = JSON.parse(abi);
         this.bytecode = bytecode;
     }
+    
+    newContractInstance(smartContractAddress){
+        let c = this.web3.eth.contract(this.abi).at(smartContractAddress);
+        return c;
+    }
 
     deploy(sellerCoinbase, buyerCoinbase, fee, callback) {
         let c = this.web3.eth.contract(this.abi);

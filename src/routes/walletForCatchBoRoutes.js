@@ -41,17 +41,37 @@ const router = function(nav, contractManager){
             const httpProviderDefault = 'http://localhost:8545';
             this.web3 = new Web3(new Web3.providers.HttpProvider(httpProviderDefault));
             this.web3.personal.unlockAccount(req.body.coinbase, req.body.passphrase);
-            const contractInstance = contractManager.contractInstance;
+            const contractInstance = contractManager.newContractInstance(req.body.smartContractAddress);
+            console.log(`contractInstance.smartContractAddress = ${contractInstance.smartContractAddress}`);
             (async function payBill_drawdown(){
                 await contractInstance.payBill({from: contractInstance.buyer(), value: contractInstance.fee()});
                 await contractInstance.drawdown({from: contractInstance.seller()});
-            }())
 
-            res.render('walletForCatchBoSuccess',{
+                const url = 'mongodb://localhost:27017';
+                const dbName = 'libraryApp';
+                const client = await MongoClient.connect(url);
+                const db = client.db(dbName);
+                const coll = db.collection('orders');
+                const rlt_findBySmartContractAddress = await coll.findOne({smartContractAddress: req.body.smartContractAddress});
+                const rlt_updateBySmartContractAddress = await coll.updateOne({smartContractAddress: req.body.smartContractAddress}, {
+                    merchandiseName: rlt_findBySmartContractAddress.merchandiseName,
+                    description: rlt_findBySmartContractAddress.description,
+                    price: rlt_findBySmartContractAddress.price,
+                    sellerName: rlt_findBySmartContractAddress.sellerName,
+                    sellerCoinbase: rlt_findBySmartContractAddress.sellerCoinbase,
+                    buyerName: rlt_findBySmartContractAddress.buyerName,
+                    buyerCoinbase: rlt_findBySmartContractAddress.buyerCoinbase,
+                    locker: rlt_findBySmartContractAddress.locker,
+                    merchandiseArriveLocker: rlt_findBySmartContractAddress.merchandiseArriveLocker,
+                    moneyPaid: true,
+                    smartContractAddress: rlt_findBySmartContractAddress.smartContractAddress
+                });
+                res.render('walletForCatchBoSuccess',{
                     nav: nav,
                     contractInstance: contractInstance
                 });
-        })
+            }());
+        });
 
     return walletForCatchBoRouter;
 };

@@ -157,7 +157,7 @@ const router = function (nav, contractManager) {
                     locker: ${results_findEmptyLocker.num},
                     merchandiseArriveLocker: false,
                     moneyPaid: false,
-                    smartContractAddress: ""`);
+                    smartContractAddress: ToBeAssigned`);
 
                     contractManager.deploy(results_findSingleBook.sellerCoinbase, req.body.buyerCoinbase, results_findSingleBook.price,
                         function (address, abi, rlt_web3) {
@@ -203,33 +203,34 @@ const router = function (nav, contractManager) {
                                         const url = 'mongodb://localhost:27017';
                                         const dbName = 'libraryApp';
                                         try{
-                                            const client = await MongoClient.connect(url);
-                                            const db = client.db(dbName);
-                                            const coll = db.collection('orders');
-                                            const results_findSingleOrder = await coll.findOne({                        
-                                                merchandiseName: results_findSingleBook.name,
-                                                description: results_findSingleBook.description,
-                                                price: results_findSingleBook.price,
-                                                sellerName: results_findSingleBook.user,
-                                                sellerCoinbase: results_findSingleBook.sellerCoinbase,
-                                                buyerName: req.user.username,
-                                                buyerCoinbase: req.body.buyerCoinbase,
-                                                locker: results_findEmptyLocker.num,
-                                                moneyPaid: false
-                                            });
-                                            const results_paySingleOrder = await coll.updateOne({_id: results_findSingleOrder._id},{
-                                                merchandiseName: results_findSingleOrder.merchandiseName,
-                                                description: results_findSingleOrder.description,
-                                                price: results_findSingleOrder.price,
-                                                sellerName: results_findSingleOrder.sellerName,
-                                                sellerCoinbase: results_findSingleOrder.sellerCoinbase,
-                                                buyerName: results_findSingleOrder.buyerName,
-                                                buyerCoinbase: results_findSingleOrder.buyerCoinbase,
-                                                locker: results_findSingleOrder.locker,
-                                                merchandiseArriveLocker: results_findSingleOrder.merchandiseArriveLocker,
-                                                moneyPaid: true,
-                                                smartContractAddress: results_findSingleOrder.smartContractAddress
-                                            });
+                                            console.log(`${req.user.username} has paid ether.`)
+                                            // const client = await MongoClient.connect(url);
+                                            // const db = client.db(dbName);
+                                            // const coll = db.collection('orders');
+                                            // const results_findSingleOrder = await coll.findOne({                        
+                                            //     merchandiseName: results_findSingleBook.name,
+                                            //     description: results_findSingleBook.description,
+                                            //     price: results_findSingleBook.price,
+                                            //     sellerName: results_findSingleBook.user,
+                                            //     sellerCoinbase: results_findSingleBook.sellerCoinbase,
+                                            //     buyerName: req.user.username,
+                                            //     buyerCoinbase: req.body.buyerCoinbase,
+                                            //     locker: results_findEmptyLocker.num,
+                                            //     moneyPaid: false
+                                            // });
+                                            // const results_paySingleOrder = await coll.updateOne({_id: results_findSingleOrder._id},{
+                                            //     merchandiseName: results_findSingleOrder.merchandiseName,
+                                            //     description: results_findSingleOrder.description,
+                                            //     price: results_findSingleOrder.price,
+                                            //     sellerName: results_findSingleOrder.sellerName,
+                                            //     sellerCoinbase: results_findSingleOrder.sellerCoinbase,
+                                            //     buyerName: results_findSingleOrder.buyerName,
+                                            //     buyerCoinbase: results_findSingleOrder.buyerCoinbase,
+                                            //     locker: results_findSingleOrder.locker,
+                                            //     merchandiseArriveLocker: results_findSingleOrder.merchandiseArriveLocker,
+                                            //     moneyPaid: true,
+                                            //     smartContractAddress: results_findSingleOrder.smartContractAddress
+                                            // });
                                         }catch(err){
                                             console.log(err);
                                         }
