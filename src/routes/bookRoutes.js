@@ -183,6 +183,19 @@ const router = function (nav, contractManager) {
                                     moneyPaid: false,
                                     buyerHasEverUnlockedLocker: false
                                 });
+                                console.log(`SUCCESS2
+                                merchandiseName: ${results_findSingleBook.name},
+                                description: ${results_findSingleBook.description},
+                                price: ${results_findSingleBook.price},
+                                sellerName: ${results_findSingleBook.user},
+                                sellerCoinbase: ${results_findSingleBook.sellerCoinbase},
+                                buyerName: ${req.user.username},
+                                buyerCoinbase: ${req.body.buyerCoinbase},
+                                smartContractAddress: ${address},
+                                locker: ${results_findEmptyLocker.num},
+                                merchandiseArriveLocker: false,
+                                moneyPaid: false,
+                                buyerHasEverUnlockedLocker: false`);
                             }());
                           
 
