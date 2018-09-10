@@ -42,10 +42,10 @@ const router = function(nav, contractManager){
             this.web3 = new Web3(new Web3.providers.HttpProvider(httpProviderDefault));
             this.web3.personal.unlockAccount(req.body.coinbase, req.body.passphrase);
             const contractInstance = contractManager.newContractInstance(req.body.smartContractAddress);
-            console.log(`contractInstance.smartContractAddress = ${contractInstance.smartContractAddress}`);
+            // console.log(`contractInstance.smartContractAddress = ${contractInstance.smartContractAddress}`);
             (async function payBill_drawdown(){
-                await contractInstance.payBill({from: contractInstance.buyer(), value: contractInstance.fee()});
-                await contractInstance.drawdown({from: contractInstance.seller()});
+                await contractInstance.payBill({from: contractInstance.buyerCoinbase(), value: contractInstance.price()});
+                await contractInstance.drawdown({from: contractInstance.sellerCoinbase()});
 
                 const url = 'mongodb://localhost:27017';
                 const dbName = 'libraryApp';

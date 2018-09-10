@@ -102,9 +102,9 @@
           <div class="row">    
             <br>
             <div class="col-md-2 col-sm-3 text-center">
-                <h4>You paid <%=contractInstance.fee()/1000000000000000000%> eth</h4>
-                <h4>Seller: <%=contractInstance.seller()%></h4>
-                <h4>Buyer: <%=contractInstance.buyer()%></h4>
+                <h4>You paid <%=contractInstance.price()/1000000000000000000%> eth</h4>
+                <h4>Seller: <%=contractInstance.sellerCoinbase()%></h4>
+                <h4>Buyer: <%=contractInstance.buyerCoinbase()%></h4>
                 <h4>SmartContractAddress: <%=contractInstance.address%></h4>
             </div>
           </div>

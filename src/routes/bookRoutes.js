@@ -160,7 +160,7 @@ const router = function (nav, contractManager) {
                     moneyPaid: false,
                     buyerHasEverUnlockedLocker: false`);
 
-                    contractManager.deploy(results_findSingleBook.sellerCoinbase, req.body.buyerCoinbase, results_findSingleBook.price,
+                    contractManager.deploy(results_findSingleBook.name, results_findSingleBook.description, results_findSingleBook.price, results_findSingleBook.user, results_findSingleBook.sellerCoinbase, req.user.username, req.body.buyerCoinbase, results_findEmptyLocker.num,
                         function (address, abi, rlt_web3) {
                             //console.log(`In bookRoutes.js contract.address=${contract.address}`);
                             console.log(`In bookRoutes.js contract.address=${address}`);
@@ -190,9 +190,9 @@ const router = function (nav, contractManager) {
                             const contractInstance = rlt_web3.eth.contract(abi).at(address);
                             console.log('===Before payBill():');
                             console.log('Contract balance is now: ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
-                            console.log('Merchandise price: ' + rlt_web3.fromWei(contractInstance.fee(), "ether") + ' eth');
-                            console.log('Seller\'s coinbase: ' + contractInstance.seller());
-                            console.log('Buyer\'s coinbase: ' + contractInstance.buyer());
+                            console.log('Merchandise price: ' + rlt_web3.fromWei(contractInstance.price(), "ether") + ' eth');
+                            console.log('Seller\'s coinbase: ' + contractInstance.sellerCoinbase());
+                            console.log('Buyer\'s coinbase: ' + contractInstance.buyerCoinbase());
                             const payBillEvent = contractInstance.ReturnValue({_from: req.body.buyerCoinbase});
                             const drawdownEvent = contractInstance.drawdownReturnValue({_from: req.body.sellerCoinbase});
                             res.redirect('/walletForCatchBo');

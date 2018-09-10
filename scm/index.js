@@ -42,12 +42,12 @@ class ContractManager {
         return c;
     }
 
-    deploy(sellerCoinbase, buyerCoinbase, fee, callback) {
+    deploy(merchandiseName, description, price, sellerName, sellerCoinbase, buyerName, buyerCoinbase, locker, callback) {
         let c = this.web3.eth.contract(this.abi);
         let that = this;
         this.web3.personal.unlockAccount(sellerCoinbase, passwordDefault);
         this.web3.personal.unlockAccount(buyerCoinbase, passwordDefault);
-        c.new(buyerCoinbase, this.web3.toWei(fee, "ether"),
+        c.new(merchandiseName, description, this.web3.toWei(price, "ether"), sellerName, sellerCoinbase, buyerName, buyerCoinbase, locker,
             {
                 from: sellerCoinbase,
                 data: '0x' + this.bytecode,
