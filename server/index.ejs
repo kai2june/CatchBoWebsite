@@ -115,7 +115,7 @@
 							　		<option value="10min">10 分鐘</option>
 								</select>
 							</form> -->
-							<button type="button" onclick="rentGogoro()">解鎖!!!</button>
+							<button type="button" onclick="rentGogoro()" id="unlockButton">解鎖!!!</button>
                             
                         </div>
                     </div>
@@ -178,6 +178,10 @@
 </footer>
 
 	<script>
+    // document.getElementById("unlockButton").onclick = function(){
+    //     location.href = "http://localhost:1916/pay/success";
+    // };
+
 	function rentGogoro() {
 		// var selection = document.getElementById("rentingTime");
 		// var indexOfSelection = selection.selectedIndex;
@@ -216,10 +220,11 @@
 				const millisecond = 30000;
 				var dataObj = {renter:"some adress", mSec:millisecond};
 				socket.emit('event_renting', dataObj);
+                location.href = "http://localhost:1916/pay/success";
 			};
   		});
   		socket.on("returnGoGORO",function(data){
-  			console.log(data)
+  			console.log(data) 
   		})
 	};
 	</script>

@@ -5,6 +5,7 @@ const Web3 = require('web3');
 
 const payRouter = express.Router();
 
+let id;
 
 const router = function(nav){
 
@@ -36,7 +37,8 @@ const router = function(nav){
             }());
         })
         .post('/', (req,res) => {
-            const id = new objectId(req.body.orderId);
+            // const id = new objectId(req.body.orderId);
+            id = new objectId(req.body.orderId);
             console.log(`orderId: ${req.body.orderId}`);
             (async function moneyPaid(){
                 const url = 'mongodb://localhost:27017';
@@ -64,20 +66,6 @@ const router = function(nav){
                         });
                     }
                     else{
-                        const rlt_updateBuyerHasEverUnlockedLocker = await coll.updateOne({_id: id}, {
-                            merchandiseName: results_findSingleOrder.merchandiseName,
-                            description: results_findSingleOrder.description,
-                            price: results_findSingleOrder.price,
-                            sellerName: results_findSingleOrder.sellerName,
-                            sellerCoinbase: results_findSingleOrder.sellerCoinbase,
-                            buyerName: results_findSingleOrder.buyerName,
-                            buyerCoinbase: results_findSingleOrder.buyerCoinbase,
-                            smartContractAddress: results_findSingleOrder.smartContractAddress,
-                            locker: results_findSingleOrder.locker,
-                            merchandiseArriveLocker: results_findSingleOrder.merchandiseArriveLocker,
-                            moneyPaid: results_findSingleOrder.moneyPaid,
-                            buyerHasEverUnlockedLocker: true
-                        });
                         res.render('../../server/index', {
                             nav: nav
                         });
@@ -89,12 +77,43 @@ const router = function(nav){
         });
     payRouter.route('/success')
         .post( (req,res) => {
-            res.send('succccccccess');
+            res.send('Successfully unlock. POST.');
         })
         .get( (req,res) => {
-            res.render('../../server/index', {
-                nav: nav
-            });
+            //res.send(`orderId= ${id}`);
+            (async function afterUnlock(){
+                const url = 'mongodb://localhost:27017';
+                const dbName = 'libraryApp';
+                try{
+                    const client = await MongoClient.connect(url);
+                    const db = client.db(dbName);
+                    const coll = db.collection('orders');
+                    const results_findSingleOrder = await coll.findOne({
+                        _id: id
+                    });
+                    const rlt_updateBuyerHasEverUnlockedLocker = await coll.updateOne({_id: id}, {
+                        merchandiseName: results_findSingleOrder.merchandiseName,
+                        description: results_findSingleOrder.description,
+                        price: results_findSingleOrder.price,
+                        sellerName: results_findSingleOrder.sellerName,
+                        sellerCoinbase: results_findSingleOrder.sellerCoinbase,
+                        buyerName: results_findSingleOrder.buyerName,
+                        buyerCoinbase: results_findSingleOrder.buyerCoinbase,
+                        smartContractAddress: results_findSingleOrder.smartContractAddress,
+                        locker: results_findSingleOrder.locker,
+                        merchandiseArriveLocker: results_findSingleOrder.merchandiseArriveLocker,
+                        moneyPaid: results_findSingleOrder.moneyPaid,
+                        buyerHasEverUnlockedLocker: true
+                    });
+                    
+                    res.render('afterUnlock', {
+                        nav: nav,
+                        order: results_findSingleOrder
+                    });
+                }catch(err){
+                    console.log(err);
+                }
+            }());
         })
 
 

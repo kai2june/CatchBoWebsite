@@ -104,9 +104,9 @@
                         <div class="col-md-2 col-sm-3 text-center">
 
                         </div>
+                        <h3>請選擇欲領取商品(已付款商品才會出現在選單中):</h3><br/>
                         <div class="col-md-10 col-sm-9">
                             <form name="mailerLocker" action="/pay" method="post">
-                                <h3>請選擇欲領取商品(已付款商品才會出現在選單中):</h3><br/>
                                 <select name="orderId" id="orderId">
                                     <option value="#">#</option>
                                     <%for(var i = 0; i<currentUserOrders.length; i++){%>
