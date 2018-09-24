@@ -22,7 +22,8 @@ const router = function (nav) {
                     } else {
                         const user = {
                             username: req.body.userName,
-                            password: req.body.password
+                            password: req.body.password,
+                            email: req.body.email
                         };
                         const results = await coll.insertOne(user);
                         req.login( results.ops[0], () => {

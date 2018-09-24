@@ -1,6 +1,7 @@
 const express = require('express');
 const {MongoClient} = require('mongodb');
 const objectId = require('mongodb').ObjectID;
+const Web3 = require('web3');
 
 const payRouter = express.Router();
 
@@ -76,7 +77,7 @@ const router = function(nav){
                             merchandiseArriveLocker: results_findSingleOrder.merchandiseArriveLocker,
                             moneyPaid: results_findSingleOrder.moneyPaid,
                             buyerHasEverUnlockedLocker: true
-                        })
+                        });
                         res.render('../../server/index', {
                             nav: nav
                         });
