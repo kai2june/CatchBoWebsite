@@ -52,7 +52,7 @@ const router = function (nav, contractManager) {
                     const client = await MongoClient.connect(url);
                     const db = client.db(dbName);
                     const coll = db.collection('lockers');
-                    const results = await coll.findOne({state: 'empty'});
+                    const results = await coll.findOne({state: 'can_be_assigned'});
                     db.close();
                     if(!results){
                         res.render('noLockerAvailable', {
@@ -113,12 +113,12 @@ const router = function (nav, contractManager) {
                     const client = await MongoClient.connect(url);
                     const db = client.db(dbName);
                     const coll_lockers = db.collection('lockers');
-                    const results_findEmptyLocker = await coll_lockers.findOne({state: 'empty'});
+                    const results_findEmptyLocker = await coll_lockers.findOne({state: 'can_be_assigned'});
                     // if(!results_findEmptyLocker)
                     //     console.log('No emptyyyyyyyyyyy locker');
                     const results_updateSingleLocker = await coll_lockers.updateOne({_id: results_findEmptyLocker._id},{
                         num: results_findEmptyLocker.num,
-                        state: 'Non-empty'
+                        state: 'already_assigned'
                     });
                     // db.close();
                     const coll_books = db.collection('books');

@@ -5,14 +5,14 @@ const {MongoClient} = require('mongodb');
 const router = function (nav) {
 
     const lockers = [
-        {num: '1', state: 'empty'},
-        {num: '2', state: 'empty'},
-        {num: '3', state: 'empty'},
-        {num: '4', state: 'empty'},
-        {num: '5', state: 'empty'},
-        {num: '6', state: 'empty'},
-        {num: '7', state: 'empty'},
-        {num: '8', state: 'empty'}
+        {num: '1', state: 'can_be_assigned'},
+        {num: '2', state: 'can_be_assigned'},
+        {num: '3', state: 'can_be_assigned'},
+        {num: '4', state: 'can_be_assigned'},
+        {num: '5', state: 'can_be_assigned'},
+        {num: '6', state: 'can_be_assigned'},
+        {num: '7', state: 'can_be_assigned'},
+        {num: '8', state: 'can_be_assigned'}
     ];
     adminRouter.route('/resetLockers')
         .all(function(req,res,next){

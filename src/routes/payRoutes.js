@@ -109,7 +109,7 @@ const router = function(nav, contractManager){
                     const coll_lockers = db.collection('lockers');
                     const results_updateSingleLocker = await coll_lockers.updateOne({num: results_findSingleOrder.locker},{
                         num: results_findSingleOrder.locker,
-                        state: "empty"
+                        state: "can_be_assigned"
                     });
                     
                      
