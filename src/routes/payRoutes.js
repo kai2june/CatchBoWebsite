@@ -7,7 +7,7 @@ const payRouter = express.Router();
 
 let id;
 
-const router = function(nav){
+const router = function(nav, contractManager){
 
     payRouter.use(function (req, res, next) {
         if (!req.user) {
@@ -105,11 +105,21 @@ const router = function(nav){
                         moneyPaid: results_findSingleOrder.moneyPaid,
                         buyerHasEverUnlockedLocker: true
                     });
-                    
+
                     res.render('afterUnlock', {
                         nav: nav,
                         order: results_findSingleOrder
                     });
+                    
+                    const httpProviderDefault = 'http://localhost:8545';
+                    this.web3 = new Web3(new Web3.providers.HttpProvider(httpProviderDefault));
+                    // this.web3.personal.unlockAccount(req.body.coinbase, req.body.passphrase);
+                    const contractInstance = contractManager.newContractInstance(results_findSingleOrder.smartContractAddress);
+                    // await contractInstance.drawdown({from: contractInstance.sellerCoinbase()});
+                    this.web3.personal.unlockAccount(this.web3.eth.coinbase, "nccutest");
+                    await contractInstance.drawdown({from: this.web3.eth.coinbase});
+                    
+
                 }catch(err){
                     console.log(err);
                 }

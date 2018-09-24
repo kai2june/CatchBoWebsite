@@ -28,7 +28,7 @@ const authRouter = require('./src/routes/authRoutes')(nav);
 const buyRecordRouter = require('./src/routes/buyRecordRoutes')(nav);
 const sellRecordRouter = require('./src/routes/sellRecordRoutes')(nav);
 const mailerRouter = require('./src/routes/mailerRoutes')(nav);
-const payRouter = require('./src/routes/payRoutes')(nav);
+const payRouter = require('./src/routes/payRoutes')(nav, contractManager);
 const allLockersRouter = require('./src/routes/allLockersRoutes')(nav);
 const walletForCatchBoRouter = require('./src/routes/walletForCatchBoRoutes')(nav, contractManager);
 

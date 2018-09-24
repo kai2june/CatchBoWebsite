@@ -45,7 +45,7 @@ const router = function(nav, contractManager){
             // console.log(`contractInstance.smartContractAddress = ${contractInstance.smartContractAddress}`);
             (async function payBill_drawdown(){
                 await contractInstance.payBill({from: contractInstance.buyerCoinbase(), value: contractInstance.price()});
-                await contractInstance.drawdown({from: contractInstance.sellerCoinbase()});
+                // await contractInstance.drawdown({from: contractInstance.sellerCoinbase()});
 
                 const url = 'mongodb://localhost:27017';
                 const dbName = 'libraryApp';
