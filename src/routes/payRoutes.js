@@ -105,12 +105,19 @@ const router = function(nav, contractManager){
                         moneyPaid: results_findSingleOrder.moneyPaid,
                         buyerHasEverUnlockedLocker: true
                     });
-
+                    
+                    const coll_lockers = db.collection('lockers');
+                    const results_updateSingleLocker = await coll_lockers.updateOne({num: results_findSingleOrder.locker},{
+                        num: results_findSingleOrder.locker,
+                        state: "empty"
+                    });
+                    
+                     
                     res.render('afterUnlock', {
                         nav: nav,
                         order: results_findSingleOrder
                     });
-                    
+
                     const httpProviderDefault = 'http://localhost:8545';
                     this.web3 = new Web3(new Web3.providers.HttpProvider(httpProviderDefault));
                     // this.web3.personal.unlockAccount(req.body.coinbase, req.body.passphrase);
