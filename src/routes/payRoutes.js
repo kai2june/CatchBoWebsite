@@ -109,9 +109,18 @@ const router = function(nav, contractManager){
                     const coll_lockers = db.collection('lockers');
                     const results_updateSingleLocker = await coll_lockers.updateOne({num: results_findSingleOrder.locker},{
                         num: results_findSingleOrder.locker,
-                        state: "can_be_assigned"
+                        state: "can_be_assigned",
+                        lockedORunlocked: "unlocked"
                     });
                     
+                    setTimeout(function() {
+                        //時間到要做甚麼
+                        coll_lockers.updateOne({num: results_findSingleOrder.locker},{
+                            num: results_findSingleOrder.locker,
+                            state: "can_be_assigned",
+                            lockedORunlocked: "locked"
+                        });
+					}, 30000);
                      
                     res.render('afterUnlock', {
                         nav: nav,

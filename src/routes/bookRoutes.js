@@ -118,7 +118,8 @@ const router = function (nav, contractManager) {
                     //     console.log('No emptyyyyyyyyyyy locker');
                     const results_updateSingleLocker = await coll_lockers.updateOne({_id: results_findEmptyLocker._id},{
                         num: results_findEmptyLocker.num,
-                        state: 'already_assigned'
+                        state: 'already_assigned',
+                        lockedORunlocked: results_findEmptyLocker.lockedORunlocked
                     });
                     // db.close();
                     const coll_books = db.collection('books');
@@ -146,19 +147,19 @@ const router = function (nav, contractManager) {
                     //     moneyPaid: false
                     // });
                     //db.close();
-                    console.log(`SUCCESS
-                    merchandiseName: ${results_findSingleBook.name},
-                    description: ${results_findSingleBook.description},
-                    price: ${results_findSingleBook.price},
-                    sellerName: ${results_findSingleBook.user},
-                    sellerCoinbase: ${results_findSingleBook.sellerCoinbase},
-                    buyerName: ${req.user.username},
-                    buyerCoinbase: ${req.body.buyerCoinbase},
-                    smartContractAddress: ToBeAssigned,
-                    locker: ${results_findEmptyLocker.num},
-                    merchandiseArriveLocker: false,
-                    moneyPaid: false,
-                    buyerHasEverUnlockedLocker: false`);
+                    // console.log(`SUCCESS
+                    // merchandiseName: ${results_findSingleBook.name},
+                    // description: ${results_findSingleBook.description},
+                    // price: ${results_findSingleBook.price},
+                    // sellerName: ${results_findSingleBook.user},
+                    // sellerCoinbase: ${results_findSingleBook.sellerCoinbase},
+                    // buyerName: ${req.user.username},
+                    // buyerCoinbase: ${req.body.buyerCoinbase},
+                    // smartContractAddress: ToBeAssigned,
+                    // locker: ${results_findEmptyLocker.num},
+                    // merchandiseArriveLocker: false,
+                    // moneyPaid: false,
+                    // buyerHasEverUnlockedLocker: false`);
 
                     contractManager.deploy(results_findSingleBook.name, results_findSingleBook.description, results_findSingleBook.price, results_findSingleBook.user, results_findSingleBook.sellerCoinbase, req.user.username, req.body.buyerCoinbase, results_findEmptyLocker.num,
                         function (address, abi, rlt_web3) {
