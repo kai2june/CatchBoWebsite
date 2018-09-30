@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var five = require("johnny-five");
+const {MongoClient} = require('mongodb');
 
 //windows
 var board  = new five.Board({
@@ -57,11 +58,11 @@ board.on("ready", function() {
 		socketForuse = socket;
 		socket.emit('news', 'hi');
 		socket.on('event_renting', function (data) {
-			renter = data["renter"];
+			renter = data["renter"].toString();
 			var mSec = data["mSec"];
-			console.log(renter)
-			console.log(mSec)
-
+			console.log(`renter: locker ${renter}`);
+			console.log(typeof(renter));
+			console.log(`time: ${mSec} ms`);
 
 			if (!isNaN(mSec)) { //如果mSec是時間(數字)
 				socket.emit('news', 'TRUE'); //ACK
@@ -81,7 +82,22 @@ board.on("ready", function() {
 				if (ledObject.unlockLedState === "on") {
 					setTimeout(function() {
 						//時間到要做甚麼
-						console.log("Timeout")
+						// console.log("Timeout")
+						
+						//更新db.locker x 為上鎖
+						(async function lockUp(){
+							const url = 'mongodb://localhost:27017';
+							const dbName = 'libraryApp';
+							const client = await MongoClient.connect(url);
+							const db = client.db(dbName);
+							const coll = db.collection('lockers');
+							const rlt_findSingleLocker = await coll.findOne({num: renter});
+							const rlt_lockUp = await coll.updateOne({num: renter}, {
+								num: rlt_findSingleLocker.num,
+								state: rlt_findSingleLocker.state,
+								lockedORunlocked: "locked"
+							});
+						}());
 
 						//鎖定
 						unlockLed.off();

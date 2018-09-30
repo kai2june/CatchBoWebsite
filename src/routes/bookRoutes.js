@@ -213,7 +213,7 @@ const router = function (nav, contractManager) {
                             
                             payBillEvent.watch(function(err, result) {
                                 if (err) {
-                                    console.log(`payBillWatch error: ${err}`);
+                                    // console.log(`payBillWatch error: ${err}`);
                                 } else {
                                     (async function moneyPaid(){
                                         const url = 'mongodb://localhost:27017';
@@ -260,7 +260,7 @@ const router = function (nav, contractManager) {
                             });
                             drawdownEvent.watch(function(e, rlt){
                                 if(e){
-                                    console.log(`drawdownWatch error: ${e}`);
+                                    // console.log(`drawdownWatch error: ${e}`);
                                 }else{
                                     console.log('===After seller drawdown:');
                                     console.log('Contract balance is now (getBalance()): ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');

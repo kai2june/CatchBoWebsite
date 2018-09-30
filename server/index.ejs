@@ -106,7 +106,8 @@
 
                         </div>
                         <div class="col-md-10 col-sm-9">
-                            <h1>Unlock!!</h1>
+                            <h1>Unlock locker <%=locker%>!!</h1>
+                            
 							<!--	<form>
 								<select id="rentingTime">
 							　		<option value="30sec">30 秒鐘</option>
@@ -181,6 +182,8 @@
     // document.getElementById("unlockButton").onclick = function(){
     //     location.href = "http://localhost:1916/pay/success";
     // };
+            var getLocker = <%=locker%>;
+            console.log(getLocker);
 
 	function rentGogoro() {
 		// var selection = document.getElementById("rentingTime");
@@ -211,14 +214,15 @@
 		//var socket = io.connect('http://172.20.10.13:1337');
 		var socket = io.connect('http://127.0.0.1:1336');
 		socket.on('news', function (data) {
-			console.log(data);
+			console.log(`data: ${data}`);
+            var getLocker = <%=locker%>;
 			// socket.emit('my other event', { my: 'data' });
 			if (data === 'TRUE') {
 				//OK
 			};
 			if (data === 'hi') {
 				const millisecond = 30000;
-				var dataObj = {renter:"some adress", mSec:millisecond};
+				var dataObj = {renter:getLocker, mSec:millisecond};
 				socket.emit('event_renting', dataObj);
                 location.href = "http://localhost:1916/pay/success";
 			};

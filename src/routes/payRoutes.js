@@ -27,6 +27,8 @@ const router = function(nav, contractManager){
                     const db = client.db(dbName);
                     const coll = db.collection('orders');
                     const currentUserOrders = await coll.find({buyerName: req.user.username, moneyPaid: true, buyerHasEverUnlockedLocker: false}).toArray();
+                    //方便測試用
+                    //const currentUserOrders = await coll.find({buyerName: req.user.username, moneyPaid: true}).toArray();
                     res.render('unlockLocker', {
                         nav: nav,
                         currentUserOrders: currentUserOrders
@@ -67,7 +69,8 @@ const router = function(nav, contractManager){
                     }
                     else{
                         res.render('../../server/index', {
-                            nav: nav
+                            nav: nav,
+                            locker: results_findSingleOrder.locker
                         });
                     }
                 }catch(err){
@@ -113,14 +116,14 @@ const router = function(nav, contractManager){
                         lockedORunlocked: "unlocked"
                     });
                     
-                    setTimeout(function() {
-                        //時間到要做甚麼
-                        coll_lockers.updateOne({num: results_findSingleOrder.locker},{
-                            num: results_findSingleOrder.locker,
-                            state: "can_be_assigned",
-                            lockedORunlocked: "locked"
-                        });
-					}, 30000);
+                    // setTimeout(function() {
+                    //     //時間到要做甚麼
+                    //     coll_lockers.updateOne({num: results_findSingleOrder.locker},{
+                    //         num: results_findSingleOrder.locker,
+                    //         state: "can_be_assigned",
+                    //         lockedORunlocked: "locked"
+                    //     });
+					// }, 30000);
                      
                     res.render('afterUnlock', {
                         nav: nav,
