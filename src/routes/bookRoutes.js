@@ -133,58 +133,49 @@ const router = function (nav, contractManager) {
                         sellerCoinbase: results_findSingleBook.sellerCoinbase
                     });
                     // db.close();
-                    // const coll_orders = db.collection('orders');
-                    // results_insertSingleOrder = await coll_orders.insertOne({
-                    //     merchandiseName: results_findSingleBook.name,
-                    //     description: results_findSingleBook.description,
-                    //     price: results_findSingleBook.price,
-                    //     sellerName: results_findSingleBook.user,
-                    //     sellerCoinbase: results_findSingleBook.sellerCoinbase,
-                    //     buyerName: req.user.username,
-                    //     buyerCoinbase: req.body.buyerCoinbase,
-                    //     locker: results_findEmptyLocker.num,
-                    //     merchandiseArriveLocker: false,
-                    //     moneyPaid: false
-                    // });
+                    const coll_orders = db.collection('orders');
+                    const rlt_insertOneOrder = await coll_orders.insertOne({
+                        merchandiseName: results_findSingleBook.name,
+                        description: results_findSingleBook.description,
+                        price: results_findSingleBook.price,
+                        sellerName: results_findSingleBook.user,
+                        sellerCoinbase: results_findSingleBook.sellerCoinbase,
+                        buyerName: req.user.username,
+                        buyerCoinbase: req.body.buyerCoinbase,
+                        smartContractAddress: null,
+                        locker: results_findEmptyLocker.num,
+                        merchandiseArriveLocker: false,
+                        moneyPaid: false,
+                        buyerHasEverUnlockedLocker: false
+                    });
+                    console.log(rlt_insertOneOrder.ops[0]);
                     //db.close();
-                    // console.log(`SUCCESS
-                    // merchandiseName: ${results_findSingleBook.name},
-                    // description: ${results_findSingleBook.description},
-                    // price: ${results_findSingleBook.price},
-                    // sellerName: ${results_findSingleBook.user},
-                    // sellerCoinbase: ${results_findSingleBook.sellerCoinbase},
-                    // buyerName: ${req.user.username},
-                    // buyerCoinbase: ${req.body.buyerCoinbase},
-                    // smartContractAddress: ToBeAssigned,
-                    // locker: ${results_findEmptyLocker.num},
-                    // merchandiseArriveLocker: false,
-                    // moneyPaid: false,
-                    // buyerHasEverUnlockedLocker: false`);
 
                     contractManager.deploy(results_findSingleBook.name, results_findSingleBook.description, results_findSingleBook.price, results_findSingleBook.user, results_findSingleBook.sellerCoinbase, req.user.username, req.body.buyerCoinbase, results_findEmptyLocker.num,
                         function (address, abi, rlt_web3) {
                             //console.log(`In bookRoutes.js contract.address=${contract.address}`);
                             console.log(`In bookRoutes.js contract.address=${address}`);
-
+                            
                             (async function patchSmartContractAddress(){
                                 const client = await MongoClient.connect(url);
                                 const db = client.db(dbName);
-                                const coll_orders = db.collection('orders');
-                                const results_insertSingleOrder = await coll_orders.insertOne({
-                                    merchandiseName: results_findSingleBook.name,
-                                    description: results_findSingleBook.description,
-                                    price: results_findSingleBook.price,
-                                    sellerName: results_findSingleBook.user,
-                                    sellerCoinbase: results_findSingleBook.sellerCoinbase,
-                                    buyerName: req.user.username,
-                                    buyerCoinbase: req.body.buyerCoinbase,
+                                const coll_orders = db.collection('orders');       
+                                const results_insertSingleOrder = await coll_orders.updateOne({_id: rlt_insertOneOrder.ops[0]._id}, {
+                                    merchandiseName: rlt_insertOneOrder.ops[0].merchandiseName,
+                                    description: rlt_insertOneOrder.ops[0].description,
+                                    price: rlt_insertOneOrder.ops[0].price,
+                                    sellerName: rlt_insertOneOrder.ops[0].sellerName,
+                                    sellerCoinbase: rlt_insertOneOrder.ops[0].sellerCoinbase,
+                                    buyerName: rlt_insertOneOrder.ops[0].buyerName,
+                                    buyerCoinbase: rlt_insertOneOrder.ops[0].buyerCoinbase,
                                     smartContractAddress: address,
-                                    locker: results_findEmptyLocker.num,
-                                    merchandiseArriveLocker: false,
-                                    moneyPaid: false,
-                                    buyerHasEverUnlockedLocker: false
+                                    locker: rlt_insertOneOrder.ops[0].locker,
+                                    merchandiseArriveLocker: rlt_insertOneOrder.ops[0].merchandiseArriveLocker,
+                                    moneyPaid: rlt_insertOneOrder.ops[0].moneyPaid,
+                                    buyerHasEverUnlockedLocker: rlt_insertOneOrder.ops[0].buyerHasEverUnlockedLocker
                                 });
-                                console.log(`SUCCESS2
+                                console.log(`SUCCESS
+                                _id: ${rlt_insertOneOrder.ops[0]._id},
                                 merchandiseName: ${results_findSingleBook.name},
                                 description: ${results_findSingleBook.description},
                                 price: ${results_findSingleBook.price},
