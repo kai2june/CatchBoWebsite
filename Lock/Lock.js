@@ -61,7 +61,7 @@ board.on("ready", function() {
 			renter = data["renter"].toString();
 			var mSec = data["mSec"];
 			console.log(`renter: locker ${renter}`);
-			console.log(typeof(renter));
+			// console.log(typeof(renter));
 			console.log(`time: ${mSec} ms`);
 
 			if (!isNaN(mSec)) { //如果mSec是時間(數字)
@@ -83,7 +83,17 @@ board.on("ready", function() {
 					setTimeout(function() {
 						//時間到要做甚麼
 						// console.log("Timeout")
-						
+
+						//鎖定
+						unlockLed.off();
+						engineRelay.on();
+						ledObject.unlockLedState = "off";
+
+						lockLed.on();
+						ledObject.lockLedState = "on";
+
+						isTimeout = true;
+		
 						//更新db.locker x 為上鎖
 						(async function lockUp(){
 							const url = 'mongodb://localhost:27017';
@@ -98,17 +108,6 @@ board.on("ready", function() {
 								lockedORunlocked: "locked"
 							});
 						}());
-
-						//鎖定
-						unlockLed.off();
-						engineRelay.on();
-						ledObject.unlockLedState = "off";
-
-						lockLed.on();
-						ledObject.lockLedState = "on";
-
-						isTimeout = true;
-
 
 					}, parseInt(mSec));
 				}

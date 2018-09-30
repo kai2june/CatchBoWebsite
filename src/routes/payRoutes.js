@@ -41,7 +41,7 @@ const router = function(nav, contractManager){
         .post('/', (req,res) => {
             // const id = new objectId(req.body.orderId);
             id = new objectId(req.body.orderId);
-            console.log(`orderId: ${req.body.orderId}`);
+            // console.log(`orderId: ${req.body.orderId}`);
             (async function moneyPaid(){
                 const url = 'mongodb://localhost:27017';
                 const dbName = 'libraryApp';

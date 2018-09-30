@@ -9,7 +9,7 @@ const router = function (nav) {
             res.redirect('/');
         }
         else {
-            console.log(req.user);
+            // console.log(req.user);
             next();
         }
     });

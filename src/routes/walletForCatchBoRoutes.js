@@ -37,7 +37,7 @@ const router = function(nav, contractManager){
     });
     walletForCatchBoRouter.route('/success')
         .post( (req, res) => {
-            console.log(`smartContractAddress: ${req.body.smartContractAddress}`)
+            // console.log(`smartContractAddress: ${req.body.smartContractAddress}`)
             const httpProviderDefault = 'http://localhost:8545';
             this.web3 = new Web3(new Web3.providers.HttpProvider(httpProviderDefault));
             this.web3.personal.unlockAccount(req.body.coinbase, req.body.passphrase);
@@ -67,10 +67,11 @@ const router = function(nav, contractManager){
                     moneyPaid: true,
                     buyerHasEverUnlockedLocker: rlt_findBySmartContractAddress.buyerHasEverUnlockedLocker 
                 });
-                res.render('walletForCatchBoSuccess',{
-                    nav: nav,
-                    contractInstance: contractInstance
-                });
+                res.redirect('/pay');
+                // res.render('walletForCatchBoSuccess',{
+                //     nav: nav,
+                //     contractInstance: contractInstance
+                // });
             }());
         });
 

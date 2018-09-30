@@ -148,14 +148,27 @@ const router = function (nav, contractManager) {
                         moneyPaid: false,
                         buyerHasEverUnlockedLocker: false
                     });
-                    console.log(rlt_insertOneOrder.ops[0]._id.toString());
+                    //console.log(rlt_insertOneOrder.ops[0]._id.toString());
                     //db.close();
 
                     contractManager.deploy(rlt_insertOneOrder.ops[0]._id.toString(), results_findSingleBook.name, results_findSingleBook.description, results_findSingleBook.price, results_findSingleBook.user, results_findSingleBook.sellerCoinbase, req.user.username, req.body.buyerCoinbase, results_findEmptyLocker.num,
                         function (address, abi, rlt_web3) {
-                            //console.log(`In bookRoutes.js contract.address=${contract.address}`);
-                            console.log(`In bookRoutes.js contract.address=${address}`);
-                            
+                            // console.log(`In bookRoutes.js contract.address=${address}`);
+                            console.log(`Order information:
+                            _id: ${rlt_insertOneOrder.ops[0]._id},
+                            merchandiseName: ${results_findSingleBook.name},
+                            description: ${results_findSingleBook.description},
+                            price: ${results_findSingleBook.price},
+                            sellerName: ${results_findSingleBook.user},
+                            sellerCoinbase: ${results_findSingleBook.sellerCoinbase},
+                            buyerName: ${req.user.username},
+                            buyerCoinbase: ${req.body.buyerCoinbase},
+                            smartContractAddress: ${address},
+                            locker: ${results_findEmptyLocker.num},
+                            merchandiseArriveLocker: false,
+                            moneyPaid: false,
+                            buyerHasEverUnlockedLocker: false`);
+
                             (async function patchSmartContractAddress(){
                                 const client = await MongoClient.connect(url);
                                 const db = client.db(dbName);
@@ -174,30 +187,20 @@ const router = function (nav, contractManager) {
                                     moneyPaid: rlt_insertOneOrder.ops[0].moneyPaid,
                                     buyerHasEverUnlockedLocker: rlt_insertOneOrder.ops[0].buyerHasEverUnlockedLocker
                                 });
-                                console.log(`SUCCESS
-                                _id: ${rlt_insertOneOrder.ops[0]._id},
-                                merchandiseName: ${results_findSingleBook.name},
-                                description: ${results_findSingleBook.description},
-                                price: ${results_findSingleBook.price},
-                                sellerName: ${results_findSingleBook.user},
-                                sellerCoinbase: ${results_findSingleBook.sellerCoinbase},
-                                buyerName: ${req.user.username},
-                                buyerCoinbase: ${req.body.buyerCoinbase},
-                                smartContractAddress: ${address},
-                                locker: ${results_findEmptyLocker.num},
-                                merchandiseArriveLocker: false,
-                                moneyPaid: false,
-                                buyerHasEverUnlockedLocker: false`);
                             }());
-                          
 
                             const passwordDefault = "nccutest";
                             const contractInstance = rlt_web3.eth.contract(abi).at(address);
-                            console.log('===Before payBill():');
-                            console.log('Contract balance is now: ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
+                            console.log('==============================Deployed!!===============================');
+                            console.log(`Smart contract address: ${address}`);
                             console.log('Merchandise price: ' + rlt_web3.fromWei(contractInstance.price(), "ether") + ' eth');
-                            console.log('Seller\'s coinbase: ' + contractInstance.sellerCoinbase());
-                            console.log('Buyer\'s coinbase: ' + contractInstance.buyerCoinbase());
+                            console.log('=============================================');
+                            console.log('Before buyer payBill():');
+                            console.log('Contract balance is now: ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
+                            console.log('Buyer coinbase is now: ' + rlt_web3.fromWei(rlt_web3.eth.getBalance(rlt_insertOneOrder.ops[0].buyerCoinbase), "ether") + ' eth');
+                            console.log('Seller coinbase is now: ' + rlt_web3.fromWei(rlt_web3.eth.getBalance(rlt_insertOneOrder.ops[0].sellerCoinbase), "ether") + ' eth');
+                            // console.log('Seller\'s coinbase: ' + contractInstance.sellerCoinbase());
+                            // console.log('Buyer\'s coinbase: ' + contractInstance.buyerCoinbase());
                             const payBillEvent = contractInstance.ReturnValue({_from: req.body.buyerCoinbase});
                             const drawdownEvent = contractInstance.drawdownReturnValue({_from: req.body.sellerCoinbase});
                             res.redirect('/walletForCatchBo');
@@ -206,46 +209,25 @@ const router = function (nav, contractManager) {
                                 if (err) {
                                     // console.log(`payBillWatch error: ${err}`);
                                 } else {
-                                    (async function moneyPaid(){
-                                        const url = 'mongodb://localhost:27017';
-                                        const dbName = 'libraryApp';
-                                        try{
-                                            console.log(`${req.user.username} has paid ether.`)
-                                            // const client = await MongoClient.connect(url);
-                                            // const db = client.db(dbName);
-                                            // const coll = db.collection('orders');
-                                            // const results_findSingleOrder = await coll.findOne({                        
-                                            //     merchandiseName: results_findSingleBook.name,
-                                            //     description: results_findSingleBook.description,
-                                            //     price: results_findSingleBook.price,
-                                            //     sellerName: results_findSingleBook.user,
-                                            //     sellerCoinbase: results_findSingleBook.sellerCoinbase,
-                                            //     buyerName: req.user.username,
-                                            //     buyerCoinbase: req.body.buyerCoinbase,
-                                            //     locker: results_findEmptyLocker.num,
-                                            //     moneyPaid: false
-                                            // });
-                                            // const results_paySingleOrder = await coll.updateOne({_id: results_findSingleOrder._id},{
-                                            //     merchandiseName: results_findSingleOrder.merchandiseName,
-                                            //     description: results_findSingleOrder.description,
-                                            //     price: results_findSingleOrder.price,
-                                            //     sellerName: results_findSingleOrder.sellerName,
-                                            //     sellerCoinbase: results_findSingleOrder.sellerCoinbase,
-                                            //     buyerName: results_findSingleOrder.buyerName,
-                                            //     buyerCoinbase: results_findSingleOrder.buyerCoinbase,
-                                            //     locker: results_findSingleOrder.locker,
-                                            //     merchandiseArriveLocker: results_findSingleOrder.merchandiseArriveLocker,
-                                            //     moneyPaid: true,
-                                            //     smartContractAddress: results_findSingleOrder.smartContractAddress
-                                            // });
-                                        }catch(err){
-                                            console.log(err);
-                                        }
-                                    }());
+                                    // (async function moneyPaid(){
+                                    //     const url = 'mongodb://localhost:27017';
+                                    //     const dbName = 'libraryApp';
+                                    //     try{
+                                    //         console.log(`${req.user.username} has paid ether.`)
+                                    //     }catch(err){
+                                    //         console.log(err);
+                                    //     }
+                                    // }());
 
+                                    console.log('=============================================');
+                                    // console.log(`Smart contract address: ${address}`);
                                     console.log('BUYER paid: ' + rlt_web3.fromWei(result.args._value, "ether") + ' eth');
-                                    console.log('===After buyer payBill, Before seller drawdown:');
+                                    console.log('=============================================');
+                                    console.log('After buyer payBill(), Before seller drawdown():');
+                                    // console.log(`Smart contract address: ${address}`);
                                     console.log('Contract balance is now: ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
+                                    console.log('Buyer coinbase is now: ' + rlt_web3.fromWei(rlt_web3.eth.getBalance(rlt_insertOneOrder.ops[0].buyerCoinbase), "ether") + ' eth');
+                                    console.log('Seller coinbase is now: ' + rlt_web3.fromWei(rlt_web3.eth.getBalance(rlt_insertOneOrder.ops[0].sellerCoinbase), "ether") + ' eth');
                                     payBillEvent.stopWatching();
                                 }
                             });
@@ -253,10 +235,15 @@ const router = function (nav, contractManager) {
                                 if(e){
                                     // console.log(`drawdownWatch error: ${e}`);
                                 }else{
-                                    console.log('===After seller drawdown:');
-                                    console.log('Contract balance is now (getBalance()): ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
-                                    console.log('Contract balance is now (event): ' + rlt_web3.fromWei(rlt.args._value, "ether") + ' eth')
-                                    console.log('===Done!===');
+                                    console.log('=============================================');
+                                    console.log('After seller drawdown():');
+                                    // console.log(`Smart contract address: ${address}`);
+                                    // console.log('Contract balance is now (getBalance()): ' + rlt_web3.fromWei(contractInstance.getBalance(), "ether") + ' eth');
+                                    // console.log('Contract balance is now (event): ' + rlt_web3.fromWei(rlt.args._value, "ether") + ' eth')
+                                    console.log('Contract balance is now: ' + rlt_web3.fromWei(rlt.args._value, "ether") + ' eth')
+                                    console.log('Buyer coinbase is now: ' + rlt_web3.fromWei(rlt_web3.eth.getBalance(rlt_insertOneOrder.ops[0].buyerCoinbase), "ether") + ' eth');
+                                    console.log('Seller coinbase is now: ' + rlt_web3.fromWei(rlt_web3.eth.getBalance(rlt_insertOneOrder.ops[0].sellerCoinbase), "ether") + ' eth');
+                                    console.log('================================Done!!=================================');
                                     drawdownEvent.stopWatching();
                                 }
                             });

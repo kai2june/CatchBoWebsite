@@ -26,7 +26,7 @@ const router = function(nav){
             //     locker: req.body.locker
             // });
             const {locker} = req.body;
-            console.log(typeof(locker));
+            // console.log(typeof(locker));
             
             const url = 'mongodb://localhost:27017';
             const dbName = 'libraryApp';
