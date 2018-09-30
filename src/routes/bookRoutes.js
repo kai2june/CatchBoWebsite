@@ -148,10 +148,10 @@ const router = function (nav, contractManager) {
                         moneyPaid: false,
                         buyerHasEverUnlockedLocker: false
                     });
-                    console.log(rlt_insertOneOrder.ops[0]);
+                    console.log(rlt_insertOneOrder.ops[0]._id.toString());
                     //db.close();
 
-                    contractManager.deploy(results_findSingleBook.name, results_findSingleBook.description, results_findSingleBook.price, results_findSingleBook.user, results_findSingleBook.sellerCoinbase, req.user.username, req.body.buyerCoinbase, results_findEmptyLocker.num,
+                    contractManager.deploy(rlt_insertOneOrder.ops[0]._id.toString(), results_findSingleBook.name, results_findSingleBook.description, results_findSingleBook.price, results_findSingleBook.user, results_findSingleBook.sellerCoinbase, req.user.username, req.body.buyerCoinbase, results_findEmptyLocker.num,
                         function (address, abi, rlt_web3) {
                             //console.log(`In bookRoutes.js contract.address=${contract.address}`);
                             console.log(`In bookRoutes.js contract.address=${address}`);

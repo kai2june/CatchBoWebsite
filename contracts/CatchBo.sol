@@ -2,6 +2,7 @@ pragma solidity ^0.4.23;
 
 contract CatchBo {
 
+    string public orderId;
     string public merchandiseName;
     string public description;
     uint public price;
@@ -13,7 +14,8 @@ contract CatchBo {
 
     event ReturnValue(address indexed _from, uint _value);
     event drawdownReturnValue(address indexed _from, uint _value);
-    constructor(string _merchandiseName, string _description, uint _price, string _sellerName, address _sellerCoinbase, string _buyerName, address _buyerCoinbase, string _locker) public {
+    constructor(string _orderId, string _merchandiseName, string _description, uint _price, string _sellerName, address _sellerCoinbase, string _buyerName, address _buyerCoinbase, string _locker) public {
+        orderId = _orderId;
         merchandiseName = _merchandiseName;
         description = _description;
         price = _price;
